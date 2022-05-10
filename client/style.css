@@ -14,6 +14,7 @@ body {
 
 .header {
     display: flex;
+    height: 4em;
     justify-content: space-between;
     border-bottom: 1px solid;
     background-color: #3de2ff32;
@@ -74,4 +75,29 @@ button {
     cursor: pointer;
 }
 
-#logged {}
+.profilImageUpload {
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 50%;
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid;
+    background-color: #085ece3e;
+}
+
+
+/* .modal-content {
+    display: flex;
+    flex-direction: column;
+} */
+
+.closeImageUpload {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}

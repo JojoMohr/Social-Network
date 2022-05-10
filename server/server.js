@@ -4,6 +4,9 @@ const compression = require("compression");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const db = require("./database/db");
+const uidSafe = require("uid-safe"); // Random string generator
+const multer = require("multer"); // Multer file data middleware
+const { upload } = require("./s3");
 
 //add the middleware that makes sure that our server parses incoming json/application requests
 //→ we need this so that we can access values in our req.body easier (check imageboard)
@@ -24,20 +27,75 @@ app.use(
     })
 );
 
+//=================MULTER==================================
+// ======= Specify the storage location  =========//
+
+const storage = multer.diskStorage({
+    // Directory
+    destination: (req, file, callback) => {
+        callback(null, path.join(__dirname, "uploads"));
+    },
+    // Filename
+    filename: (req, file, callback) => {
+        // 1. Generate a random string
+        uidSafe(24).then((randomId) => {
+            // 2. Construct random file name with extension
+            const fileName = `${randomId}${path.extname(file.originalname)}`;
+            callback(null, fileName);
+        });
+    },
+});
+
+const uploader = multer({ storage });
+
+//=== Add a new route to upload Profil Pic =================
+
+app.post(
+    "/api/profile_picture",
+    uploader.single("file"),
+    upload,
+    (req, res) => {
+        console.log("req.body:\t", req.body);
+        // Multer puts the file info in `req.file`
+        console.log("req.file:\t", req.file);
+        //console.log("req.params.id", req.params.id);
+        let url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
+        let userId = req.session.userId;
+        console.log("Find the IMG with this URL: ", url);
+
+        if (req.file) {
+            db.updateProfilePicture(userId, url)
+                .then((insertedImage) => {
+                    console.log("IMAGE HAS BEEN UPLOADED 📥");
+                    console.log("INSERTED IMAGE", insertedImage.rows[0]);
+                    console.log("URL: ", url);
+                    res.json({ url });
+                })
+                .catch((error) => {
+                    console.log("ERROR WHILE UPLOADING ❌📥", error);
+                });
+        } else {
+            res.json({
+                success: false,
+            });
+        }
+    }
+);
+
 //================================================================
 
-app.get("/user/id.json", function(req, res) {
+app.get("/user/id.json", function (req, res) {
     res.json({
         userId: req.session.userId, // ❌ this needs to be changed to => req.session.userId
     });
 });
 
-app.get("/welcome", function(req, res) {
+app.get("/welcome", function (req, res) {
     console.log("WELCOME PAGE");
 });
 
 // =====================POST ON REGISTER==========================
-app.post("/register", function(req, res) {
+app.post("/register", function (req, res) {
     console.log("POST ON REGISTER 📝");
     let { firstname, lastname, email, password } = req.body;
 
@@ -60,14 +118,27 @@ app.post("/register", function(req, res) {
             res.json({ success: false });
 
             console.log("USER EXISTS ALREADY EXISTS ❌", error);
-
-            // hint: error.constraint === "users_email_key"
-            // is your friend!
-            // res.sendStatus(500);
         });
 });
+
+//===========GET "/api/users/me"==================================
+
+app.get("/api/users/me", async (req, res) => {
+    console.log("API/USERS/ME");
+    // GET DB REQ WITH USER INFO
+    try {
+        const userId = req.session.userId;
+        console.log("USER ID", userId);
+        const result = await db.getLoggedUser(userId);
+        res.json(result);
+        console.log("GET RESULTS", result);
+    } catch (error) {
+        console.log("ERROR IN CATCH", error.message);
+    }
+});
+
 //======================POST ON LOGIN=============================
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
     console.log("POST ON LOGIN📝");
     let { email, password } = req.body;
     console.log("EMAIL PW", email, password);
@@ -97,17 +168,17 @@ app.post("/login", function(req, res) {
 
 //================================================================
 //================================================================
-app.post("/logout", function(req, res) {
+app.post("/logout", function (req, res) {
     // res.render("login");
     console.log("LOGGING OUT USER");
     req.session = null;
 });
 //================================================================
 
-app.get("*", function(req, res) {
+app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function() {
+app.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening. on PORT 3000 🟢");
 });

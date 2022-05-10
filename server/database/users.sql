@@ -6,6 +6,7 @@ CREATE TABLE users (
     firstname      VARCHAR(255) NOT NULL,
     lastname       VARCHAR(255) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
+    profile_picture_url TEXT,   -- new!
     passwordhash   VARCHAR NOT NULL,
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
