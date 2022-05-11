@@ -8,7 +8,7 @@ const uidSafe = require("uid-safe"); // Random string generator
 const multer = require("multer"); // Multer file data middleware
 const { upload } = require("./s3");
 
-//add the middleware that makes sure that our server parses incoming json/application requests
+// middleware  makes sure that our server parses incoming json/application requests
 //→ we need this so that we can access values in our req.body easier (check imageboard)
 app.use(compression());
 app.use(express.json());
@@ -86,7 +86,7 @@ app.post(
 
 app.get("/user/id.json", function (req, res) {
     res.json({
-        userId: req.session.userId, // ❌ this needs to be changed to => req.session.userId
+        userId: req.session.userId,
     });
 });
 
@@ -137,6 +137,22 @@ app.get("/api/users/me", async (req, res) => {
     }
 });
 
+app.put("/api/users/me", async (req, res) => {
+    console.log("UPDATING USER BIO");
+try {
+      const userId = req.session.userId;
+    
+
+
+
+} catch (error) {
+    
+}
+
+
+
+
+}
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
     console.log("POST ON LOGIN📝");

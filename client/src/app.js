@@ -1,6 +1,7 @@
 import { Component } from "react";
-import ProfilePictureModal from "./profilPictureModal";
+import ProfilePictureModal from "./profilePictureModal";
 import ProfilePicture from "./profilePicture";
+import Profile from "./profile";
 //===========FUNCTION COMPONENT============================================
 
 export default class App extends Component {
@@ -62,6 +63,7 @@ export default class App extends Component {
                             <form>
                                 <button>Logout</button>
                             </form>
+
                             <ProfilePicture
                                 profile_picture_url={
                                     this.state.profile_picture_url
@@ -71,19 +73,20 @@ export default class App extends Component {
                         </div>
                     </div>
                 </header>
-
-                <main className="container">
-                    <h1>
-                        Welcome back {this.state.firstname}{" "}
-                        {this.state.lastname}
-                    </h1>
-                </main>
                 {this.state.showModal && (
                     <ProfilePictureModal
                         closeModal={this.closeModal}
                         onUpload={this.onUpload}
                     />
                 )}
+
+                <Profile
+                    firstname={this.state.firstname}
+                    lastname={this.state.lastname}
+                    onUpload={this.onUpload}
+                    closeModal={this.closeModal}
+                    pictureUrl={this.state.profile_picture_url}
+                />
 
                 <footer>2020 ACME</footer>
             </div>

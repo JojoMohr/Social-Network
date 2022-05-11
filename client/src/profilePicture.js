@@ -7,6 +7,7 @@ export default function ProfilePicture({ profile_picture_url, onClick }) {
             height="50px"
             width="50px"
             border="2px solid"
+            border-radius="5px"
         />
     );
 }

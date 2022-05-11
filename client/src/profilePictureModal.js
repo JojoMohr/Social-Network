@@ -1,4 +1,4 @@
-export default function ProfileModal({ closeModal, onUpload }) {
+export default function ProfilePictureModal({ closeModal, onUpload }) {
     function onSubmit(e) {
         // Prevent the default form submission behavior
         e.preventDefault();
