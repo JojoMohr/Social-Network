@@ -6,16 +6,17 @@ CREATE TABLE users (
     firstname      VARCHAR(255) NOT NULL,
     lastname       VARCHAR(255) NOT NULL,
     email           VARCHAR(50) NOT NULL UNIQUE,
-    profile_picture_url TEXT,   -- new!
+    profile_picture_url TEXT,  
+    bio             TEXT,
     passwordhash   VARCHAR NOT NULL,
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
 -- ==========PASSWORD RESET========================================
-CREATE TABLE password_reset_codes (
-    id              SERIAL PRIMARY KEY,
-    code            VARCHAR(6) NOT NULL,
-    email           VARCHAR(50) NOT NULL,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- CREATE TABLE password_reset_codes (
+--     id              SERIAL PRIMARY KEY,
+--     code            VARCHAR(6) NOT NULL,
+--     email           VARCHAR(50) NOT NULL,
+--     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );

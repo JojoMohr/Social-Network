@@ -70,6 +70,16 @@ module.exports.updateProfilePicture = (userId, url) => {
         [userId, url]
     );
 };
+
+module.exports.updateUserBio = (userId, bio) => {
+    return db.query(
+        `UPDATE users
+        SET bio = $2
+        WHERE id = $1
+        RETURNING *`,
+        [userId, bio]
+    );
+};
 // // ==============PASSWORD RESET=========================================
 // function updatePasswordByUserEmail({ email, password }) {
 //     return hashPassword(password).then((password_hash) => {

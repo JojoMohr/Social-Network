@@ -19,10 +19,10 @@ export default function ProfilePictureModal({ closeModal, onUpload }) {
                 console.log("RESPONSE", data);
                 onUpload(data.url);
                 // this.images.unshift(insertedImage);
+            })
+            .catch((error) => {
+                console.log("ERROR", error);
             });
-
-        // perform the fetch
-        // on success, call onUpload with the right parameter
     }
 
     return (

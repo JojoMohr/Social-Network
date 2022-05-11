@@ -2,6 +2,7 @@ import { Component } from "react";
 
 export default class BioEditor extends Component {
     constructor(props) {
+        console.log("BIO PROPS", props.bio);
         super(props);
         this.state = {
             isEditing: false,
@@ -9,6 +10,7 @@ export default class BioEditor extends Component {
 
         this.onSubmit = this.onSubmit.bind(this);
         this.showEditor = this.showEditor.bind(this);
+        this.closeEditor = this.closeEditor.bind(this);
         // bind things!
 
         // function to switch to edit mode
@@ -18,18 +20,31 @@ export default class BioEditor extends Component {
         this.setState({ isEditing: true });
     }
 
+    closeEditor() {
+        this.setState({ isEditing: false });
+    }
+
     onSubmit(e) {
         e.preventDefault();
         // extract the bio
         const newBio = e.target.bio.value;
         // make the right HTTP call
-        fetch("/api/user/me", {
-            method: "PUT",
+        fetch("/api/users/bio", {
+            method: "POST",
             body: JSON.stringify({ bio: newBio }),
             headers: {
                 "Content-Type": "application/json",
             },
-        });
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(("BIO FROM FETCHED: ", data));
+                const bio = data.rows[0].bio;
+                this.props.onBioUpdate(bio);
+                this.closeEditor();
+            });
 
         // call the function passed as a prop
     }
@@ -43,7 +58,10 @@ export default class BioEditor extends Component {
             return (
                 <form onSubmit={this.onSubmit}>
                     <textarea id="addbio" name="bio"></textarea>
-                    <button id="savebio">SAVE BIo</button>
+                    <button id="savebio">SAVE BIO</button>
+                    <button type="button" onClick={this.closeEditor}>
+                        CANCEL
+                    </button>
                 </form>
             );
         }
@@ -51,7 +69,7 @@ export default class BioEditor extends Component {
         if (!this.state.isEditing && this.props.bio) {
             return (
                 <>
-                    <p>{this.props.bio}</p>
+                    <p>BIO:{this.props.bio}</p>
                     <button onClick={this.showEditor}>CHANGE BIO</button>
                 </>
             );

@@ -1,5 +1,6 @@
 import BioEditor from "./bioEditor";
 import ProfilePicture from "./profilePicture";
+// import ProfilePictureModal from "./profilePictureModal";
 
 // this is a functional one!
 export default function Profile({
@@ -10,9 +11,7 @@ export default function Profile({
     bio,
     onBioUpdate,
 }) {
-    // the user info needed to be displayed
-    // a function to be called when the bio is updated
-
+    console.log("URL", profile_picture_url);
     return (
         // display the user avatar (reuse <ProfilePicture> and pass the right props to it)
         <div className="profile">
@@ -20,11 +19,10 @@ export default function Profile({
                 <h1>
                     {firstname} {lastname}
                 </h1>
+                <ProfilePicture profile_picture_url={profile_picture_url} />
+
+                <BioEditor bio={bio} onBioUpdate={onBioUpdate}></BioEditor>
             </main>
-
-            <ProfilePicture profile_picture_url={profile_picture_url} />
-
-            <BioEditor bio={bio} onBioUpdate={onBioUpdate}></BioEditor>
         </div>
     );
 }

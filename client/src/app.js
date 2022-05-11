@@ -12,11 +12,13 @@ export default class App extends Component {
             firstname: "",
             lastname: "",
             profile_picture_url: "",
-            showModal: true,
+            showModal: false,
+            bio: "",
         };
         this.onProfileClick = this.onProfileClick.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
+        this.onBioUpdate = this.onBioUpdate.bind(this);
     }
     componentDidMount() {
         fetch("/api/users/me")
@@ -28,6 +30,7 @@ export default class App extends Component {
                     firstname: data.firstname,
                     lastname: data.lastname,
                     profile_picture_url: data.profile_picture_url,
+                    bio: data.bio,
                 });
             })
             .catch((error) => console.log(error));
@@ -50,28 +53,28 @@ export default class App extends Component {
         // remember to close the modal!
     }
 
+    onBioUpdate(newBio) {
+        console.log("WIR SIND IN APP FCTN ", newBio);
+        this.setState({ bio: newBio });
+        console.log("THIS ATATE BIO", this.state.bio);
+    }
+
     render() {
         console.log("STATE", this.state);
         return (
             <div className="app">
-                <header>
-                    <div id="logged">
-                        <div className="header">
-                            <img id="logo" src="/images/logo.png" alt="LOGO" />
-                            <nav>Home</nav>
+                <header className="header">
+                    <img id="logo" src="/images/logo.png" alt="LOGO" />
+                    <nav>Home</nav>
 
-                            <form>
-                                <button>Logout</button>
-                            </form>
+                    <form>
+                        <button>Logout</button>
+                    </form>
 
-                            <ProfilePicture
-                                profile_picture_url={
-                                    this.state.profile_picture_url
-                                }
-                                onClick={this.onProfileClick}
-                            />
-                        </div>
-                    </div>
+                    <ProfilePicture
+                        profile_picture_url={this.state.profile_picture_url}
+                        onClick={this.onProfileClick}
+                    />
                 </header>
                 {this.state.showModal && (
                     <ProfilePictureModal
@@ -85,7 +88,9 @@ export default class App extends Component {
                     lastname={this.state.lastname}
                     onUpload={this.onUpload}
                     closeModal={this.closeModal}
-                    pictureUrl={this.state.profile_picture_url}
+                    onBioUpdate={this.onBioUpdate}
+                    profile_picture_url={this.state.profile_picture_url}
+                    bio={this.state.bio}
                 />
 
                 <footer>2020 ACME</footer>

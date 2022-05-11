@@ -137,22 +137,22 @@ app.get("/api/users/me", async (req, res) => {
     }
 });
 
-app.put("/api/users/me", async (req, res) => {
+app.post("/api/users/bio", async (req, res) => {
     console.log("UPDATING USER BIO");
-try {
-      const userId = req.session.userId;
-    
+    try {
+        const userId = req.session.userId;
+        console.log("USER ID", userId);
+        const { bio } = req.body;
+        console.log("BIO", bio);
 
-
-
-} catch (error) {
-    
-}
-
-
-
-
-}
+        const result = await db.updateUserBio(userId, bio);
+        res.json(result);
+        // get the new user Bio
+        console.log("RESULTS", result.rows[0].bio);
+    } catch (error) {
+        console.log("ERROR IN CATCH post(/api/users/bio ", error.message);
+    }
+});
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
     console.log("POST ON LOGIN📝");
