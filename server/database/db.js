@@ -39,11 +39,6 @@ module.exports.login = ({ email, password }) => {
             }
         });
     });
-    // (you may want to write a getUserByEmail function)
-    // if not, return null
-    // then check if the found user password_hash matches the given password
-    // if not, return null
-    // else, return the user
 };
 
 module.exports.getUserByEmail = ({ email }) => {
@@ -80,60 +75,13 @@ module.exports.updateUserBio = (userId, bio) => {
         [userId, bio]
     );
 };
-// // ==============PASSWORD RESET=========================================
-// function updatePasswordByUserEmail({ email, password }) {
-//     return hashPassword(password).then((password_hash) => {
-//         const query = `
-//                 UPDATE users SET password_hash = $1 WHERE email = $2 RETURNING *
-//                 `;
-//         const params = [email, password_hash];
-//         return db.query(query, params);
-//     });
-// }
 
-// function sendCode({ code, email }) {
-//     console.log("[social:email] sending email with code", code, email);
-//     // ses.sendEmail({
-//     //     Source: "Whatever <whatever@whatever.de>",
-//     //     Destination: {
-//     //         ToAddresses: [email],
-//     //     },
-//     //     Message: {
-//     //         Body: {
-//     //             Text: {
-//     //                 Data: "Here's the code" + code,
-//     //             },
-//     //         },
-//     //         Subject: {
-//     //             Data: "Your application has been accepted",
-//     //         },
-//     //     },
-//     // })
-//     //     .promise()
-//     //     .then(() => console.log("it worked!!!"))
-//     //     .catch((err) => {
-//     //         console.log(err);
-//     //     });
-// }
-
-// function createResetPasswordCode({ code, email }) {
-//     console.log("USE THIS CODE", code);
-//     const query = `
-//                 INSERT INTO password_reset_codes(code, email) VALUES($1, $2) RETURNING * `;
-//     const params = [code, email];
-//     return db.query(query, params).then((result) => result.rows[0]);
-// }
-
-// function getCode(code) {
-//     const query = `
-//                 SELECT * FROM password_reset_codes WHERE code = $1 `;
-//     const params = [code];
-//     return db.query(query, params);
-// }
-
-// module.exports = {
-//     updatePasswordByUserEmail,
-//     createResetPasswordCode,
-//     getCode,
-//     sendCode,
-// };
+module.exports.getMatchingUsers = async function (val) {
+    console.log("VAL", val);
+    const foundUsers = await db.query(
+        `SELECT firstname, lastname, profile_picture_url, id FROM users WHERE firstname ILIKE $1;`,
+        [val + "%"]
+    );
+    console.log("FOUND USER", foundUsers);
+    return foundUsers;
+};

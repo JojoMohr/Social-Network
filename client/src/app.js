@@ -2,6 +2,9 @@ import { Component } from "react";
 import ProfilePictureModal from "./profilePictureModal";
 import ProfilePicture from "./profilePicture";
 import Profile from "./profile";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import FindPeople from "./findPeople";
+
 //===========FUNCTION COMPONENT============================================
 
 export default class App extends Component {
@@ -64,34 +67,44 @@ export default class App extends Component {
         console.log("STATE", this.state);
         return (
             <div className="app">
-                <header className="header">
-                    <img id="logo" src="/images/logo.png" alt="LOGO" />
-                    <form>{/* <button>Logout</button> */}</form>
-                    <ProfilePicture
-                        profile_picture_url={this.state.profile_picture_url}
-                        onProfileClick={this.onProfileClick}
-                    />
-                </header>
-                {this.state.showModal && (
-                    <ProfilePictureModal
-                        closeModal={this.closeModal}
-                        onUpload={this.onUpload}
-                    />
-                )}
+                <BrowserRouter>
+                    <header className="header">
+                        <img id="logo" src="/images/logo.png" alt="LOGO" />
 
-                <Profile
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    profile_picture_url={this.state.profile_picture_url}
-                    bio={this.state.bio}
-                    onUpload={this.onUpload}
-                    closeModal={this.closeModal}
-                    onProfileClick={this.onProfileClick}
-                    showModal={this.showModal}
-                    onBioUpdate={this.onBioUpdate}
-                />
+                        <Link to="/">Profile </Link>
+                        <Link to="/findpeople">FindPeople </Link>
+                        <ProfilePicture
+                            profile_picture_url={this.state.profile_picture_url}
+                            onProfileClick={this.onProfileClick}
+                        />
+                    </header>
+                    {this.state.showModal && (
+                        <ProfilePictureModal
+                            closeModal={this.closeModal}
+                            onUpload={this.onUpload}
+                        />
+                    )}
 
-                <footer>2022 NETSTER</footer>
+                    <div className="findPeopleForm">
+                        <Route path="/findpeople">
+                            <FindPeople />
+                        </Route>
+                    </div>
+                    <Route exact path="/">
+                        <Profile
+                            firstname={this.state.firstname}
+                            lastname={this.state.lastname}
+                            profile_picture_url={this.state.profile_picture_url}
+                            bio={this.state.bio}
+                            onUpload={this.onUpload}
+                            closeModal={this.closeModal}
+                            onProfileClick={this.onProfileClick}
+                            showModal={this.showModal}
+                            onBioUpdate={this.onBioUpdate}
+                        />
+                    </Route>
+                    <footer>2022 NETSTER</footer>
+                </BrowserRouter>
             </div>
         );
     }

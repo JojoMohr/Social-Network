@@ -10,7 +10,7 @@ body {
 
 #logo {
     /* background-image: url("/logo.png"); */
-    width: 20vw;
+    width: 15rem;
 }
 
 .header {
@@ -66,7 +66,11 @@ body {
     align-items: center;
     margin-top: 50px;
 }
-
+.findPeopleForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 button {
     height: 4vh;
     background-color: #085ece3e;
@@ -118,16 +122,17 @@ button {
 }
 
 footer {
-    position: relative;
+    position: fixed;
     bottom: 0px;
     background-color: aliceblue;
-    margin-left: 5%;
+    padding-left: 5%;
+    width: 100%;
 }
 .profilePage {
     display: grid;
     grid-template-columns: 1fr 3fr;
     height: 100vh;
-    padding-top: 3%;
+    /* padding-top: 1%; */
 }
 
 .profileInfo {
@@ -139,6 +144,12 @@ footer {
     flex-direction: column;
 }
 
+.profileInfo img {
+    height: 8rem;
+    width: 8rem;
+    object-fit: cover;
+}
+
 .profilePageContent {
     background-color: ghostwhite;
     border: 1px solid;
@@ -146,11 +157,12 @@ footer {
 }
 
 .profilePictureHeader {
-    height: 20%;
-    /* width: 20%; */
+    height: 3rem;
+    width: 3rem;
     border: 2px solid;
-    padding: 1%;
+    padding: 2px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .bio {
@@ -161,11 +173,28 @@ footer {
 }
 
 .textarea {
-    width: 250px;
+    width: 240px;
     height: 100px;
+    resize: none;
 }
 
 /* .bigProfilePicture {
     height: 4rem;
     width: 4rem;
 } */
+
+#found-user {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px;
+}
+
+.findPeople {
+    height: 100vh;
+}
+
+#all-found-users {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+}

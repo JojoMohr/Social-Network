@@ -89,9 +89,31 @@ app.get("/user/id.json", function (req, res) {
         userId: req.session.userId,
     });
 });
+//================================================================
 
 app.get("/welcome", function (req, res) {
     console.log("WELCOME PAGE");
+});
+
+//================================================================
+app.post("/findPeople", function (req, res) {
+    console.log("USERS POST 📥");
+    const { user } = req.body;
+    console.log("USER ✅", user);
+    // get the value that is beeing typed
+    // paste value into the function
+
+    db.getMatchingUsers(user)
+        .then((matchingUsers) => {
+            console.log(
+                "RESULTS IN SERVER FUNCTION:",
+                matchingUsers.rows[0].firstname
+            );
+            res.json(matchingUsers.rows);
+        })
+        .catch((err) => {
+            console.log("ERROR", err);
+        });
 });
 
 // =====================POST ON REGISTER==========================
