@@ -15,18 +15,19 @@ export default class App extends Component {
             showModal: false,
             bio: "",
         };
+        //binding all functions in the component so that they can be accessed with this
         this.onProfileClick = this.onProfileClick.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.onBioUpdate = this.onBioUpdate.bind(this);
     }
+    //fires right after the page is loaded
     componentDidMount() {
         fetch("/api/users/me")
             .then((response) => response.json())
             .then((data) => {
-                console.log("DATAAAA", data);
+                // Sets all props accordingly
                 this.setState({
-                    // this can be this.setState(data) of course
                     firstname: data.firstname,
                     lastname: data.lastname,
                     profile_picture_url: data.profile_picture_url,
@@ -48,15 +49,15 @@ export default class App extends Component {
 
     onUpload(new_profile_url) {
         console.log("UPDATED PROFILEPIC");
-        this.setState({ profile_picture_url: new_profile_url });
         // update the state with the new_profile_url
+        this.setState({ profile_picture_url: new_profile_url });
         // remember to close the modal!
+        this.setState({ showModal: false });
     }
 
     onBioUpdate(newBio) {
-        console.log("WIR SIND IN APP FCTN ", newBio);
+        console.log("New Bio Updated", newBio);
         this.setState({ bio: newBio });
-        console.log("THIS ATATE BIO", this.state.bio);
     }
 
     render() {
@@ -65,15 +66,10 @@ export default class App extends Component {
             <div className="app">
                 <header className="header">
                     <img id="logo" src="/images/logo.png" alt="LOGO" />
-                    <nav>Home</nav>
-
-                    <form>
-                        <button>Logout</button>
-                    </form>
-
+                    <form>{/* <button>Logout</button> */}</form>
                     <ProfilePicture
                         profile_picture_url={this.state.profile_picture_url}
-                        onClick={this.onProfileClick}
+                        onProfileClick={this.onProfileClick}
                     />
                 </header>
                 {this.state.showModal && (
@@ -86,14 +82,16 @@ export default class App extends Component {
                 <Profile
                     firstname={this.state.firstname}
                     lastname={this.state.lastname}
-                    onUpload={this.onUpload}
-                    closeModal={this.closeModal}
-                    onBioUpdate={this.onBioUpdate}
                     profile_picture_url={this.state.profile_picture_url}
                     bio={this.state.bio}
+                    onUpload={this.onUpload}
+                    closeModal={this.closeModal}
+                    onProfileClick={this.onProfileClick}
+                    showModal={this.showModal}
+                    onBioUpdate={this.onBioUpdate}
                 />
 
-                <footer>2020 ACME</footer>
+                <footer>2022 NETSTER</footer>
             </div>
         );
     }

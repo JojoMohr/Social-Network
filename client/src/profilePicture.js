@@ -1,12 +1,13 @@
-export default function ProfilePicture({ profile_picture_url, onClick }) {
+export default function ProfilePicture({
+    profile_picture_url,
+    onProfileClick,
+}) {
     return (
         <img
+            className="profilePictureHeader"
             src={profile_picture_url}
-            onClick={onClick}
+            onClick={onProfileClick}
             placeholder="Profilpic"
-            height="50px"
-            width="50px"
-            border="2px solid"
         />
     );
 }

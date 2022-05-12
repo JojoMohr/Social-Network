@@ -31,10 +31,10 @@ export default function ProfilePictureModal({ closeModal, onUpload }) {
                 &times;
             </button>
             <div className="modal-content">
-                <h2>Upload profile picture</h2>
+                <h2>Upload your profile picture!</h2>
                 <form onSubmit={onSubmit}>
                     <input type="file" required name="file" />
-                    <button>Upload</button>
+                    <button className="uploadPictureButton">Upload</button>
                 </form>
             </div>
         </div>
