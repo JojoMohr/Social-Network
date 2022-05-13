@@ -81,6 +81,17 @@ app.post(
         }
     }
 );
+//================================================================
+app.get("/api/user/:otherUserId", async (req, res) => {
+    try {
+        const otherUserId = req.params.otherUserId;
+        const result = await db.getOtherUser(otherUserId);
+        res.json(result || null);
+        console.log("GET RESULTS", result);
+    } catch (error) {
+        console.log("ERROR IN CATCH", error.message);
+    }
+});
 
 //================================================================
 
@@ -204,7 +215,7 @@ app.post("/login", function (req, res) {
     });
 });
 
-//================================================================
+//================================================================w
 //================================================================
 app.post("/logout", function (req, res) {
     // res.render("login");

@@ -4,6 +4,7 @@ import ProfilePicture from "./profilePicture";
 import Profile from "./profile";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import FindPeople from "./findPeople";
+import OtherProfile from "./otherProfile";
 
 //===========FUNCTION COMPONENT============================================
 
@@ -102,6 +103,9 @@ export default class App extends Component {
                             showModal={this.showModal}
                             onBioUpdate={this.onBioUpdate}
                         />
+                    </Route>
+                    <Route path="/user/:otherUserId">
+                        <OtherProfile />
                     </Route>
                     <footer>2022 NETSTER</footer>
                 </BrowserRouter>

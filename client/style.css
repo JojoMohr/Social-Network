@@ -5,7 +5,7 @@
 body {
     background-color: ghostwhite;
     margin: 0;
-    /* font-family: "Space Mono", monospace; */
+    font-family: sans-serif;
 }
 
 #logo {

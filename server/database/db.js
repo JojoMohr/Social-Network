@@ -55,6 +55,13 @@ module.exports.getLoggedUser = (userId) => {
             return result.rows[0];
         });
 };
+module.exports.getOtherUser = (userId) => {
+    return db
+        .query(`SELECT * FROM users WHERE id = $1`, [userId])
+        .then((result) => {
+            return result.rows[0];
+        });
+};
 
 module.exports.updateProfilePicture = (userId, url) => {
     return db.query(
@@ -79,9 +86,21 @@ module.exports.updateUserBio = (userId, bio) => {
 module.exports.getMatchingUsers = async function (val) {
     console.log("VAL", val);
     const foundUsers = await db.query(
-        `SELECT firstname, lastname, profile_picture_url, id FROM users WHERE firstname ILIKE $1;`,
+        `SELECT firstname, lastname, profile_picture_url, id FROM users WHERE firstname ILIKE $1`,
         [val + "%"]
     );
     console.log("FOUND USER", foundUsers);
     return foundUsers;
+};
+
+module.exports.getLastUsers = async function (id) {
+    console.log("ID", id);
+    const lastUsers = await db.query(
+        `SELECT * FROM users
+         WHERE id <> $1
+         ORDER BY id DESC
+         LIMIT 4`,
+        [id]
+    );
+    return lastUsers;
 };

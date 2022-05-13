@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export default function findPeople() {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
     console.log("SEARCHRESULTS", searchResults);
