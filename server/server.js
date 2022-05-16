@@ -83,11 +83,21 @@ app.post(
 );
 //================================================================
 app.get("/api/user/:otherUserId", async (req, res) => {
+    const otherUserId = req.params.otherUserId;
+    const sessionId = req.session.userId;
+    console.log("IDIDID", otherUserId, sessionId);
+
     try {
-        const otherUserId = req.params.otherUserId;
         const result = await db.getOtherUser(otherUserId);
-        res.json(result || null);
-        console.log("GET RESULTS", result);
+        if (otherUserId == sessionId) {
+            res.json({ error: "THIS IS YOU" });
+        }
+        if (!otherUserId) {
+            res.json({ error: "I DIDNT FIND ANYTING" });
+        } else {
+            res.json(result || null);
+            console.log("GET RESULTS", result);
+        }
     } catch (error) {
         console.log("ERROR IN CATCH", error.message);
     }
@@ -113,7 +123,12 @@ app.post("/findPeople", function (req, res) {
     console.log("USER ✅", user);
     // get the value that is beeing typed
     // paste value into the function
-
+    if (user == "") {
+        db.getLastUsers(req.session.userId).then((lastUsers) => {
+            res.json(lastUsers.rows);
+        });
+        return;
+    }
     db.getMatchingUsers(user)
         .then((matchingUsers) => {
             console.log(
@@ -186,6 +201,92 @@ app.post("/api/users/bio", async (req, res) => {
         console.log("ERROR IN CATCH post(/api/users/bio ", error.message);
     }
 });
+
+//==  GET /friendship-status/:id
+app.get("/get-friendship-status/:id", async (req, res) => {
+    try {
+        const recipient_id = req.params.id;
+        const sender_id = req.session.userId;
+        console.log("LOGLOGLOGL", recipient_id, sender_id);
+
+        const friendRequestStatus = await db.friendRequestStatus(
+            recipient_id,
+            sender_id
+        );
+
+        console.log("friendshipStatus", friendRequestStatus);
+        // NO FRIENDSHIP AND NO REQUEST
+        if (friendRequestStatus.length < 1) {
+            return res.json({ error: null, status: "ADD FRIEND" });
+        }
+        // ACCEPTED YES => UNFRIEND
+        if (friendRequestStatus[0].accepted) {
+            res.json({ error: null, status: "UNFRIEND" });
+        }
+
+        // REQUEST PENDING  / ACCEPT REQUEST /
+        if (
+            sender_id == friendRequestStatus[0].recipient_id &&
+            friendRequestStatus[0].accepted == false
+        ) {
+            res.json({ error: null, status: "CANCEL REQUEST" });
+        }
+        // REQUEST PENDING  / CANCEL REQUEST /
+        if (
+            friendRequestStatus[0].accepted == false &&
+            friendRequestStatus[0].sender_id == sender_id
+        ) {
+            res.json({ error: null, status: "ACCEPT REQUEST" });
+        }
+    } catch (error) {
+        console.log("ERROR IN CATCH friendship-status :", error.message);
+    }
+});
+
+app.post("/set-friendship-status", async (req, res) => {
+    console.log("REQ BODY", req.body);
+    const sender_id = req.session.userId;
+    const recipient_id = req.body.recipient_id;
+    try {
+        // ADDING FRIEND
+        if (req.body.status == "ADD FRIEND") {
+            const addFriend = await db.addFriendRequest(
+                sender_id,
+                recipient_id
+            );
+            res.json({ error: null, status: "CANCEL REQUEST" });
+        }
+        // UNFRIEND
+        if (req.body.status == "UNFRIEND") {
+            const deleteFriendRequest = await db.deleteFriendRequest(
+                recipient_id,
+                sender_id
+            );
+            res.json({ error: null, status: "ADD FRIEND" });
+        }
+
+        //ACCEPT FRIENDSHIP
+        if (req.body.status == "ACCEPT REQUEST") {
+            const acceptFriendRequest = await db.acceptFriendRequest(
+                recipient_id,
+                sender_id
+            );
+            res.json({ error: null, status: "UNFRIEND" });
+        }
+
+        if (req.body.status == "CANCEL REQUEST") {
+            //CANCEL REQUEST
+            const deleteFriendRequest = await db.deleteFriendRequest(
+                recipient_id,
+                sender_id
+            );
+            res.json({ error: null, status: "ADD FRIEND" });
+        }
+    } catch (error) {
+        console.log("ERROR: " + error);
+    }
+});
+
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
     console.log("POST ON LOGIN📝");
@@ -215,12 +316,13 @@ app.post("/login", function (req, res) {
     });
 });
 
-//================================================================w
-//================================================================
-app.post("/logout", function (req, res) {
+//=============Post on Logout======================================w
+
+app.get("/logout", (req, res) => {
     // res.render("login");
     console.log("LOGGING OUT USER");
     req.session = null;
+    res.json({ success: true });
 });
 //================================================================
 

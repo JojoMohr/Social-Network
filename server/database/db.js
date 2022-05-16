@@ -59,6 +59,7 @@ module.exports.getOtherUser = (userId) => {
     return db
         .query(`SELECT * FROM users WHERE id = $1`, [userId])
         .then((result) => {
+            if (result.rows.length < 1) return null;
             return result.rows[0];
         });
 };
@@ -103,4 +104,51 @@ module.exports.getLastUsers = async function (id) {
         [id]
     );
     return lastUsers;
+};
+
+module.exports.friendRequestStatus = (recipient_id, sender_id) => {
+    console.log("WE are in friendRequestStatus function on DB");
+    return db
+        .query(
+            `SELECT * FROM friendships
+                WHERE (recipient_id = $1 AND sender_id = $2)
+                OR (recipient_id = $2 AND sender_id = $1);
+                   `,
+            [recipient_id, sender_id]
+        )
+        .then((result) => {
+            return result.rows;
+        });
+};
+
+module.exports.deleteFriendRequest = (recipient_id, sender_id) => {
+    console.log("WE ARE IN deleteFriendRequest function on DB");
+    return db.query(
+        `
+    DELETE FROM friendships WHERE (recipient_id = $1 AND sender_id = $2)
+    OR (recipient_id = $2 AND sender_id = $1); 
+    `,
+        [recipient_id, sender_id]
+    );
+};
+
+module.exports.addFriendRequest = (recipient_id, sender_id) => {
+    console.log("ADD FRINED");
+    console.log(recipient_id, +sender_id);
+    return db.query(
+        `INSERT INTO friendships (recipient_id, sender_id)
+        VALUES ($1, $2)`,
+        [recipient_id, +sender_id]
+    );
+};
+
+module.exports.acceptFriendRequest = (recipient_id, sender_id) => {
+    return db.query(
+        ` UPDATE friendships
+                    SET accepted = TRUE
+                    WHERE (sender_id = $1 AND recipient_id = $2)
+                    OR
+                    (sender_id =$2 AND recipient_id =$1)`,
+        [recipient_id, sender_id]
+    );
 };

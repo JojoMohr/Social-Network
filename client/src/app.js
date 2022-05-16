@@ -5,7 +5,8 @@ import Profile from "./profile";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
-
+// import Logout from "./logout";
+import DropdownMenu from "./dropdownMenu";
 //===========FUNCTION COMPONENT============================================
 
 export default class App extends Component {
@@ -17,6 +18,7 @@ export default class App extends Component {
             lastname: "",
             profile_picture_url: "",
             showModal: false,
+            showMenu: false,
             bio: "",
         };
         //binding all functions in the component so that they can be accessed with this
@@ -24,6 +26,7 @@ export default class App extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.onBioUpdate = this.onBioUpdate.bind(this);
+        this.onMenuClick = this.onMenuClick.bind(this);
     }
     //fires right after the page is loaded
     componentDidMount() {
@@ -44,6 +47,11 @@ export default class App extends Component {
     onProfileClick() {
         console.log("CLICK ON PROFILE");
         this.setState({ showModal: true });
+    }
+
+    onMenuClick() {
+        console.log("CLICK ON MENU", this.state.showMenu);
+        this.setState({ showMenu: !this.state.showMenu });
     }
 
     closeModal() {
@@ -70,22 +78,33 @@ export default class App extends Component {
             <div className="app">
                 <BrowserRouter>
                     <header className="header">
-                        <img id="logo" src="/images/logo.png" alt="LOGO" />
-
-                        <Link to="/">Profile </Link>
-                        <Link to="/findpeople">FindPeople </Link>
+                        <Link to="/">
+                            <img id="logo" src="/images/logo.png" alt="LOGO" />
+                        </Link>
+                        <div className="findPeopleForm">
+                            <FindPeople />
+                        </div>
                         <ProfilePicture
                             profile_picture_url={this.state.profile_picture_url}
                             onProfileClick={this.onProfileClick}
                         />
+                        <p id="menuButton" onClick={this.onMenuClick}>
+                            MENU 𝍂
+                        </p>
+
+                        {this.state.showMenu && (
+                            <div className="dropdown-menu">
+                                <DropdownMenu />
+                            </div>
+                        )}
                     </header>
+
                     {this.state.showModal && (
                         <ProfilePictureModal
                             closeModal={this.closeModal}
                             onUpload={this.onUpload}
                         />
                     )}
-
                     <div className="findPeopleForm">
                         <Route path="/findpeople">
                             <FindPeople />

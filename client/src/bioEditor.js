@@ -57,10 +57,7 @@ export default class BioEditor extends Component {
         if (this.state.isEditing) {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <textarea className="textarea"
-                   
-                        name="bio"
-                    ></textarea>
+                    <textarea className="textarea" name="bio"></textarea>
                     <button id="savebio">SAVE BIO</button>
                     <button type="button" onClick={this.closeEditor}>
                         CANCEL
@@ -72,9 +69,9 @@ export default class BioEditor extends Component {
         if (!this.state.isEditing && this.props.bio) {
             return (
                 <>
-                    <p>{this.props.firstname}'s BIO</p>
+                    <p>{this.props.firstname}s BIO</p>
                     <p className="bio">{this.props.bio}</p>
-                    <button onClick={this.showEditor}>CHANGE BIO</button>
+                    <button onClick={this.showEditor}>EDIT BIO</button>
                 </>
             );
         }

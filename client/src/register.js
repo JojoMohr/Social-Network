@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default class Register extends Component {
     constructor() {
@@ -31,17 +31,15 @@ export default class Register extends Component {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
             }),
         })
             .then((res) => res.json())
             .then((result) => {
                 console.log(result);
                 if (result.success == true) {
-
                     location.reload();
                 } // if all goes to plan, refresh the page
-
             })
             .catch((err) => {
                 // if something goes wrong => render an error
@@ -52,10 +50,14 @@ export default class Register extends Component {
     render() {
         return (
             <>
-                <div className="register-container">
+                <div className="register-login-container">
                     <h1>Please Register </h1>
+                    <div className="trenner"></div>
                     {this.state.error && <p>Oops, something went wrong!</p>}
-                    <form className="registerForm" onSubmit={this.handleSubmit}>
+                    <form
+                        className="register-login-form"
+                        onSubmit={this.handleSubmit}
+                    >
                         <input
                             onChange={this.handleChange}
                             type="text"

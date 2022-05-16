@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-
 //import Register from "./register.js";
 
 export default class Login extends Component {
@@ -15,9 +14,11 @@ export default class Login extends Component {
     }
 
     handleChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        }, () => console.log(this.state)
+        this.setState(
+            {
+                [e.target.name]: e.target.value,
+            },
+            () => console.log(this.state)
         );
     }
     handleSubmit(e) {
@@ -44,29 +45,39 @@ export default class Login extends Component {
                 } else {
                     console.log("ELSE BLOCK");
                     location.reload();
-                    //    window.location.href = "/"
+                    window.location.href = "/";
                 } // if all goes to plan, refresh the page
             })
             .catch((error) => {
                 console.log("ERROR", error);
             });
-
-
     }
 
-
     render() {
-        return (<form className="login-container"
-            onSubmit={this.handleSubmit}>
-            <h1> Please Login </h1>{" "}
-            <input onChange={this.handleChange}
-                type="email"
-                name="email"
-                placeholder="Email Address" />
-            <input onChange={this.handleChange}
-                type="password"
-                name="password"
-                placeholder="Password" />
-            <button> Login </button> <Link to="/"> Click here to Register! </Link> </form>);
+        return (
+            <form
+                className="register-login-container"
+                onSubmit={this.handleSubmit}
+            >
+                <h1> Please Login </h1>
+                <div className="trenner"></div>
+                <div className="register-login-form">
+                    <input
+                        onChange={this.handleChange}
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                    />
+                    <input
+                        onChange={this.handleChange}
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                    />
+                    <button> Login </button>{" "}
+                </div>
+                <Link to="/"> Click here to Register! </Link>{" "}
+            </form>
+        );
     }
 }

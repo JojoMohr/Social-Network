@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function findPeople() {
     const [user, setUser] = useState("");
+    let [firstShowUsers, setfirstShowUsers] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
 
     console.log("SEARCHRESULTS", searchResults);
@@ -10,30 +12,7 @@ export default function findPeople() {
 
     useEffect(() => {
         console.log("In Use Effect [ComponentDidMount]");
-        // e.preventDefault();
         // THIS CAN BE ADDE AFTER THE 3 DEFAULT USERS ARE BEEING ❌DISPLAYED
-        // fetch("/findPeople", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         user,
-        //     }),
-        // })
-        //     .then((res) => res.json())
-        //     .then((res) => {
-        //         console.log("RESULTS IN FIND PEOPLE POST: ➡️", res);
-        //         setSearchResults(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log("ERROR", err);
-        //     });
-    }, [user]);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
         fetch("/findPeople", {
             method: "POST",
             headers: {
@@ -51,29 +30,42 @@ export default function findPeople() {
             .catch((err) => {
                 console.log("ERROR", err);
             });
-    };
+    }, [user]);
+
+    function userSearch() {
+        console.log("CLICK ON SEARCH");
+        setfirstShowUsers((firstShowUsers = !firstShowUsers));
+    }
 
     return (
         <>
-            <h1> Searches for people </h1>
-            <form onSubmit={handleSubmit}>
+            <div className="searchContainer">
                 <input
-                    onSubmit={handleSubmit}
+                    placeholder="Search for users..."
+                    autoComplete="off"
+                    onClick={userSearch}
+                    // onSubmit={handleSubmit}
                     onChange={(e) => setUser(e.target.value)}
                     name={"user"}
                 />
-                <button>Submit</button>
-            </form>
-            <div id="all-found-users">
-                {searchResults.map((user) => (
-                    <div id="found-users" key={user.id}>
-                        <img src={user.profile_picture_url}></img>
-                        <p>
-                            {user.firstname} {user.lastname}
-                        </p>
-                    </div>
-                ))}
+                {/* <button>Submit</button> */}
             </div>
+            {firstShowUsers && (
+                <div id="all-found-users">
+                    {searchResults.map((user) => (
+                        <div key={user.id}>
+                            <Link to={`/user/${user.id}`}>
+                                <div className="found-users">
+                                    <img src={user.profile_picture_url}></img>
+                                    <p>
+                                        {user.firstname} {user.lastname}
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            )}
         </>
     );
 }
