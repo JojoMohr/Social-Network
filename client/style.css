@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: ghostwhite;
+    background-color: rgb(239, 242, 245);
     margin: 0;
     font-family: sans-serif;
 }
@@ -15,11 +15,11 @@ body {
 
 .header {
     display: grid;
-    grid-template-columns: 10fr 5fr 1fr 1fr;
+    grid-template-columns: 6fr 5fr 1fr 1.5fr 1fr;
     height: 4em;
     justify-content: start;
     border-bottom: 1px solid;
-    background-color: #3de2ff32;
+    background-color: white;
     padding: 10px;
     align-content: center;
     align-items: center;
@@ -75,8 +75,12 @@ body {
 }
 
 .searchContainer {
-    height: 3vh;
-    width: 100%;
+    height: 4vh;
+    width: 50%;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
 
 .searchContainer button {
@@ -142,10 +146,10 @@ button {
     left: 50%;
     transform: translateX(-50%);
     flex-direction: column;
-    background-color: #023d8a8b;
+    background-color: #0095f6;
     border-radius: 10%;
     /* offset-x | offset-y | blur-radius | spread-radius | color */
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 2px 2px #888888;
 }
 .modal-content button {
     background-color: #0095f6;
@@ -162,7 +166,7 @@ button {
 }
 
 footer {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0px;
     background-color: aliceblue;
     padding-left: 5%;
@@ -170,19 +174,27 @@ footer {
 }
 .profilePage {
     display: grid;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: 1fr 4fr;
     height: 100vh;
     /* padding-top: 1%; */
 }
 
 .profileInfo {
     display: flex;
+    height: 70%;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid;
-    background-color: aliceblue;
+    /* border: 1px solid; */
+    background-color: white;
     flex-direction: column;
-    padding: 5%;
+    padding: 20px;
+    margin: 2%;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    box-shadow: 2px 2px 2px 2px #888888;
+    margin-top: 33px;
 }
 
 .profileInfo button {
@@ -197,9 +209,16 @@ footer {
 }
 
 .profilePageContent {
-    background-color: ghostwhite;
-    border: 1px solid;
+    background-color: white;
+    /* border: 1px solid; */
     padding-left: 5%;
+    margin-top: 33px;
+    margin-right: 1%;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    box-shadow: 2px 2px 2px 2px #888888;
 }
 
 .profilePictureHeader {
@@ -236,13 +255,17 @@ footer {
 } */
 
 .found-users {
+    z-index: 2;
     display: flex;
     flex-direction: row;
     border: solid 1px grey;
-    /* gap: 6%; */
-    /* padding: 1px; */
+    background-color: white;
     margin: 3px;
     width: 280px;
+}
+
+.found-users:hover {
+    background-color: rgb(227, 228, 229);
 }
 
 .found-users img {
@@ -277,11 +300,22 @@ footer {
     top: 70px;
 }
 #menuButton {
+    height: 3rem;
+    width: 3rem;
+    padding: 2px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
     cursor: pointer;
+    border: solid 2px;
 }
 
 .dropNav li {
-    border: solid 2px;
+    /* border: solid 2px; */
     padding: 5px;
     margin-bottom: 5px;
     margin-right: 5px;

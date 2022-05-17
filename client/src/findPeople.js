@@ -39,8 +39,9 @@ export default function findPeople() {
 
     return (
         <>
-            <div className="searchContainer">
+            <div>
                 <input
+                    className="searchContainer"
                     placeholder="Search for users..."
                     autoComplete="off"
                     onClick={userSearch}

@@ -87,7 +87,8 @@ module.exports.updateUserBio = (userId, bio) => {
 module.exports.getMatchingUsers = async function (val) {
     console.log("VAL", val);
     const foundUsers = await db.query(
-        `SELECT firstname, lastname, profile_picture_url, id FROM users WHERE firstname ILIKE $1`,
+        `SELECT firstname, lastname, profile_picture_url, id FROM users WHERE firstname ILIKE $1
+        LIMIT 10`,
         [val + "%"]
     );
     console.log("FOUND USER", foundUsers);

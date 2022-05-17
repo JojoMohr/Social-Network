@@ -7,6 +7,7 @@ import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 // import Logout from "./logout";
 import DropdownMenu from "./dropdownMenu";
+import { Spring } from "react-spring";
 //===========FUNCTION COMPONENT============================================
 
 export default class App extends Component {
@@ -88,14 +89,27 @@ export default class App extends Component {
                             profile_picture_url={this.state.profile_picture_url}
                             onProfileClick={this.onProfileClick}
                         />
+                        <p>{this.state.firstname}</p>
                         <p id="menuButton" onClick={this.onMenuClick}>
-                            MENU 𝍂
+                            𝍂
                         </p>
 
                         {this.state.showMenu && (
-                            <div className="dropdown-menu">
-                                <DropdownMenu />
-                            </div>
+                            <Spring
+                                from={{ opacity: 0, marginTop: -500 }}
+                                to={{ opacity: 1, marginTop: 0 }}
+                            >
+                                {(props) => (
+                                    <div
+                                        style={props}
+                                        className="dropdown-menu"
+                                    >
+                                        <DropdownMenu
+                                            onProfileClick={this.onProfileClick}
+                                        />
+                                    </div>
+                                )}
+                            </Spring>
                         )}
                     </header>
 
@@ -126,8 +140,8 @@ export default class App extends Component {
                     <Route path="/user/:otherUserId">
                         <OtherProfile />
                     </Route>
-                    <footer>2022 NETSTER</footer>
                 </BrowserRouter>
+                <footer>2022 NETSTER</footer>
             </div>
         );
     }
