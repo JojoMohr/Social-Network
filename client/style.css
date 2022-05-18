@@ -33,6 +33,10 @@ body {
     align-items: center; 
 }*/
 
+button:hover {
+    background-color: #34aaf8;
+}
+
 .register-login-container {
     display: flex;
     justify-content: center;
@@ -299,7 +303,7 @@ footer {
     right: 6px;
     top: 70px;
 }
-#menuButton {
+.menuButton {
     height: 3rem;
     width: 3rem;
     padding: 2px;
@@ -312,6 +316,10 @@ footer {
     font-weight: bold;
     cursor: pointer;
     border: solid 2px;
+}
+
+.menuButton:hover {
+    border: 2px solid gray;
 }
 
 .dropNav li {

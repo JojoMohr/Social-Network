@@ -90,7 +90,7 @@ export default class App extends Component {
                             onProfileClick={this.onProfileClick}
                         />
                         <p>{this.state.firstname}</p>
-                        <p id="menuButton" onClick={this.onMenuClick}>
+                        <p className="menuButton" onClick={this.onMenuClick}>
                             𝍂
                         </p>
 

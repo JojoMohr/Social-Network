@@ -243,6 +243,8 @@ app.get("/get-friendship-status/:id", async (req, res) => {
     }
 });
 
+//==POST set-friendship-status ===================================
+
 app.post("/set-friendship-status", async (req, res) => {
     console.log("REQ BODY", req.body);
     const sender_id = req.session.userId;
@@ -286,6 +288,25 @@ app.post("/set-friendship-status", async (req, res) => {
         console.log("ERROR: " + error);
     }
 });
+
+
+//== GET /friends-and-wannabes=====================================
+// Using but already present from previous friend button feature
+// POST /friendship/accept
+// POST /friendship/unfriend
+app.get('/friends-and-wannabes', async (req, res) => {
+    console.log("GET REQUEST ON /friends-and-wannabes");
+});
+
+
+
+
+
+
+
+
+
+
 
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
