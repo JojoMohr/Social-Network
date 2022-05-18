@@ -29,8 +29,9 @@ module.exports = () => ({
         port: "3000",
     },
     module: {
-        rules: [{
-                test: /\.jsx?$/,
+        rules: [
+            {
+                test: /\.js$/,
                 loader: "babel-loader",
             },
             {

@@ -19,7 +19,6 @@ fetch("/user/id.json")
         if (!data.userId) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
-            console.log("ABOUT TO RENDER THAT APP SHIt BABBYYY");
             ReactDOM.render(
                 <Provider store={store}>
                     <App />

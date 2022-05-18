@@ -2,6 +2,7 @@ import BioEditor from "./bioEditor";
 import ProfilePicture from "./profilePicture";
 // import ProfilePictureModal from "./profilePictureModal";
 // import ProfilePictureModal from "./profilePictureModal";
+import Friends from "./friends";
 
 // this is a functional one!
 export default function Profile({
@@ -39,6 +40,7 @@ export default function Profile({
             </main>
             <div className="profilePageContent">
                 <p>THIS IS WHERE THE INFO GOES!</p>
+                <Friends />
             </div>
         </div>
     );

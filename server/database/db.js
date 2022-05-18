@@ -95,26 +95,13 @@ module.exports.getMatchingUsers = async function (val) {
     return foundUsers;
 };
 
-module.exports.getLastUsers = async function (id) {
-    console.log("ID", id);
-    const lastUsers = await db.query(
-        `SELECT * FROM users
-         WHERE id <> $1
-         ORDER BY id DESC
-         LIMIT 4`,
-        [id]
-    );
-    return lastUsers;
-};
-
 module.exports.friendRequestStatus = (recipient_id, sender_id) => {
     console.log("WE are in friendRequestStatus function on DB");
     return db
         .query(
             `SELECT * FROM friendships
                 WHERE (recipient_id = $1 AND sender_id = $2)
-                OR (recipient_id = $2 AND sender_id = $1);
-                   `,
+                OR (recipient_id = $2 AND sender_id = $1);`,
             [recipient_id, sender_id]
         )
         .then((result) => {
@@ -127,8 +114,7 @@ module.exports.deleteFriendRequest = (recipient_id, sender_id) => {
     return db.query(
         `
     DELETE FROM friendships WHERE (recipient_id = $1 AND sender_id = $2)
-    OR (recipient_id = $2 AND sender_id = $1); 
-    `,
+    OR (recipient_id = $2 AND sender_id = $1);`,
         [recipient_id, sender_id]
     );
 };
@@ -142,14 +128,44 @@ module.exports.addFriendRequest = (recipient_id, sender_id) => {
         [recipient_id, +sender_id]
     );
 };
+module.exports.getLastUsers = async function (id) {
+    console.log("ID", id);
+    const lastUsers = await db.query(
+        `SELECT * FROM users
+         WHERE id <> $1
+         ORDER BY id DESC
+         LIMIT 4`,
+        [id]
+    );
+    return lastUsers;
+};
 
 module.exports.acceptFriendRequest = (recipient_id, sender_id) => {
     return db.query(
-        ` UPDATE friendships
-                    SET accepted = TRUE
-                    WHERE (sender_id = $1 AND recipient_id = $2)
-                    OR
-                    (sender_id =$2 AND recipient_id =$1)`,
+        `UPDATE friendships
+        SET accepted = TRUE
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR
+        (sender_id =$2 AND recipient_id =$1)`,
         [recipient_id, sender_id]
+    );
+};
+
+// SELECT from friendships JOIN users ... ON ... WHERE ... that gives back all friendships where:
+// the other user is the sender
+// it's not accepted (pending request)
+// it is accepted (friendship)
+// the logged in user is the sender
+// it is accepted (friendship)
+
+module.exports.getFriendships = (recipient_id) => {
+    return (
+        db.query(`SELECT users.id, firstname, lastname,  profile_picture_url, accepted
+                    FROM friendships
+                    JOIN users
+                    ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+                    OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+                    OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`),
+        [recipient_id]
     );
 };

@@ -7,6 +7,8 @@ import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 // import Logout from "./logout";
 import DropdownMenu from "./dropdownMenu";
+import Friends from "./friends";
+
 import { Spring } from "react-spring";
 //===========FUNCTION COMPONENT============================================
 
@@ -139,6 +141,9 @@ export default class App extends Component {
                     </Route>
                     <Route path="/user/:otherUserId">
                         <OtherProfile />
+                    </Route>
+                    <Route path="/friends">
+                        <Friends />
                     </Route>
                 </BrowserRouter>
                 <footer>2022 NETSTER</footer>
