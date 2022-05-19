@@ -301,6 +301,11 @@ app.get("/friends-and-wannabes", async (req, res) => {
     res.json(friendships.rows);
 });
 
+
+//============================================================================
+
+
+
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
     console.log("POST ON LOGIN📝");
