@@ -158,7 +158,7 @@ module.exports.acceptFriendRequest = (recipient_id, sender_id) => {
 // the logged in user is the sender
 // it is accepted (friendship)
 
-module.exports.getFriendships = (recipient_id) => {
+module.exports.getFriendships = (sender_id) => {
     return db.query(
         `SELECT users.id, firstname, lastname,  profile_picture_url, accepted
                     FROM friendships
@@ -166,6 +166,6 @@ module.exports.getFriendships = (recipient_id) => {
                     ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
                     OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
                     OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`,
-        [recipient_id]
+        [sender_id]
     );
 };

@@ -14,8 +14,24 @@ export function friendsAndWannabesReducer(friendsAndWannabes = [], action) {
         console.log("friendsAndWannabes ❤️", friendsAndWannabes);
     } else if (action.type === "unfriend") {
         console.log("ACTION IN  UNFRIEND🟠", action);
+
+        friendsAndWannabes = friendsAndWannabes.filter((friend) => {
+            if (friend.id !== action.payload.id) {
+                return friend;
+            }
+        });
     } else if (action.type === "accept") {
         console.log("ACTION IN  ACCEPT 🟠", action);
+        friendsAndWannabes = friendsAndWannabes.map((friend) => {
+            if (friend.id == action.payload.id) {
+                return {
+                    ...friend,
+                    accepted: true,
+                };
+            } else {
+                return friend;
+            }
+        });
     }
     return friendsAndWannabes;
 }
@@ -35,19 +51,19 @@ export function receiveFriendsAndWannabes(action) {
 
 // unfriend() to remove someone from the list of friends and wannabes
 
-export function unfriend(action) {
+export function unfriend(id) {
     return {
         type: "unfriend",
-        payload: { action },
+        payload: { id },
     };
 }
 // accept() to accept a friendship request
 
-// export function accept(action) {
-//     return {
-//         type: "accept",
-//         payload: { action },
-//     };
-// }
+export function accept(id) {
+    return {
+        type: "accept",
+        payload: { id },
+    };
+}
 
 // (Bonus: reject())

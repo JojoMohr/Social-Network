@@ -246,15 +246,15 @@ app.get("/get-friendship-status/:id", async (req, res) => {
 //==POST set-friendship-status ===================================
 
 app.post("/set-friendship-status", async (req, res) => {
-    console.log("REQ BODY", req.body);
+    console.log("REQ BODY !!!!", req.body);
     const sender_id = req.session.userId;
     const recipient_id = req.body.recipient_id;
     try {
         // ADDING FRIEND
         if (req.body.status == "ADD FRIEND") {
             const addFriend = await db.addFriendRequest(
-                sender_id,
-                recipient_id
+                recipient_id,
+                sender_id
             );
             res.json({ error: null, status: "CANCEL REQUEST" });
         }
@@ -301,10 +301,7 @@ app.get("/friends-and-wannabes", async (req, res) => {
     res.json(friendships.rows);
 });
 
-
 //============================================================================
-
-
 
 //======================POST ON LOGIN=============================
 app.post("/login", function (req, res) {
@@ -318,7 +315,7 @@ app.post("/login", function (req, res) {
     }
 
     db.login(req.body).then((user) => {
-        console.log("REQ BODY", req.body);
+        // console.log("REQ BODY", req.body);
 
         if (!user) {
             console.log("CREDENTIALS WRONG OR USER DOESNT EXIST ❌");

@@ -7,7 +7,7 @@ import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 // import Logout from "./logout";
 import DropdownMenu from "./dropdownMenu";
-import Friends from "./redux/friends";
+import Friends from "./friends";
 
 // import { Spring } from "react-spring";
 //===========FUNCTION COMPONENT============================================
@@ -104,7 +104,7 @@ export default class App extends Component {
                             </div>
                         )}
                     </header>
-
+                 
                     {this.state.showModal && (
                         <ProfilePictureModal
                             closeModal={this.closeModal}
@@ -136,6 +136,7 @@ export default class App extends Component {
                         <Friends />
                     </Route>
                 </BrowserRouter>
+
                 <footer>2022 NETSTER</footer>
             </div>
         );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./logout";
+import Friends from "./friends";
 // import { Spring } from "react-spring";
 export default function findPeople({ onProfileClick }) {
     const [menu, setMenu] = useState();
@@ -20,6 +21,9 @@ export default function findPeople({ onProfileClick }) {
                     <Link>
                         <li onClick={onProfileClick}>Change Picture</li>
                     </Link>
+                    <li>
+                        <Link to="/friends">Friends</Link>
+                    </li>
                     <li>
                         <Link>
                             <Logout />
