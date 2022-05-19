@@ -7,9 +7,9 @@ import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 // import Logout from "./logout";
 import DropdownMenu from "./dropdownMenu";
-import Friends from "./friends";
+import Friends from "./redux/friends";
 
-import { Spring } from "react-spring";
+// import { Spring } from "react-spring";
 //===========FUNCTION COMPONENT============================================
 
 export default class App extends Component {
@@ -97,21 +97,11 @@ export default class App extends Component {
                         </p>
 
                         {this.state.showMenu && (
-                            <Spring
-                                from={{ opacity: 0, marginTop: -500 }}
-                                to={{ opacity: 1, marginTop: 0 }}
-                            >
-                                {(props) => (
-                                    <div
-                                        style={props}
-                                        className="dropdown-menu"
-                                    >
-                                        <DropdownMenu
-                                            onProfileClick={this.onProfileClick}
-                                        />
-                                    </div>
-                                )}
-                            </Spring>
+                            <div className="dropdown-menu">
+                                <DropdownMenu
+                                    onProfileClick={this.onProfileClick}
+                                />
+                            </div>
                         )}
                     </header>
 

@@ -20,8 +20,6 @@
         "@babel/polyfill": "^7.4.3",
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
-        "@dicebear/avatars": "^4.10.2",
-        "@dicebear/avatars-avataaars-sprites": "^4.10.2",
         "@testing-library/react": "^11.2.2",
         "@types/react-router-dom": "^5.1.8",
         "aws-sdk": "^2.815.0",
@@ -67,8 +65,5 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@types/react-dom": "^18.0.3"
-    }
+    "license": "ISC"
 }

@@ -2,7 +2,7 @@ import BioEditor from "./bioEditor";
 import ProfilePicture from "./profilePicture";
 // import ProfilePictureModal from "./profilePictureModal";
 // import ProfilePictureModal from "./profilePictureModal";
-import Friends from "./friends";
+import Friends from "./redux/friends";
 
 // this is a functional one!
 export default function Profile({

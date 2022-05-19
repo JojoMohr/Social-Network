@@ -297,8 +297,8 @@ app.get("/friends-and-wannabes", async (req, res) => {
     console.log("GET REQUEST ON /friends-and-wannabes", req.session);
     let userId = req.session.userId;
     let friendships = await db.getFriendships(userId);
-    console.log("FRIENDSHIPS", friendships);
-    res.json(friendships);
+    // console.log("FRIENDSHIPS", friendships);
+    res.json(friendships.rows);
 });
 
 //======================POST ON LOGIN=============================

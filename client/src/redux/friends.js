@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { receiveFriendsAndWannabes } from "./friends-and-wannabes/slice.js";
 
 export default function Friends() {
+    const dispatch = useDispatch();
+
     // const friends = useSelector((state) => {
     //     return state.friendsAndWannabes.filter(({ accepted }) => accepted);
     // });
@@ -13,7 +17,8 @@ export default function Friends() {
         fetch("/friends-and-wannabes")
             .then((res) => res.json())
             .then((result) => {
-                console.log("Friends and Wannaabeeeees", result);
+                console.log("FRIENDS&WANNABEES 🔴", result);
+                dispatch(receiveFriendsAndWannabes(result));
             })
             .catch((err) => {
                 console.log("error in FETCH", err);

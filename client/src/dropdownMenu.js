@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./logout";
-import { Spring } from "react-spring";
+// import { Spring } from "react-spring";
 export default function findPeople({ onProfileClick }) {
     const [menu, setMenu] = useState();
 
