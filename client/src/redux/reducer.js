@@ -1,9 +1,8 @@
-
 import { combineReducers } from "redux";
 import { friendsAndWannabesReducer } from "./friends-and-wannabes/slice.js";
 
 const rootReducer = combineReducers({
-    friendsAndWannabees: friendsAndWannabesReducer,
+    friendsAndWannabes: friendsAndWannabesReducer,
     // Reducer
     // Dealing with all 3 possible actions in 3 different if/else blocks
 
@@ -12,14 +11,8 @@ const rootReducer = combineReducers({
     // "friendsAndWannabes/accepted" - one of the users in the existing array of friends and wannabees should have their accepted property set to true. You probably want to use .map()
 
     // "friendsAndWannabees/unfriended" - one of the users in the existing array of friends and wannabees should be removed. You probably want to use .filter()
-    
+
     // (Bonus friendaAndWannabees/rejected)
-
-
-
 });
 
-
-
-
-export default rootReducer; 
+export default rootReducer;

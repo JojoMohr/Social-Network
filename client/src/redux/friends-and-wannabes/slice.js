@@ -5,10 +5,13 @@ export function friendsAndWannabesReducer(friendsAndWannabes = [], action) {
     if (action.type == "receiveFriendsAndWannabes") {
         console.log(
             "ACTION IN SLICE receiveFriendsAndWannabes 🟠",
-            action.payload
+            action.payload,
+            [...friendsAndWannabes, ...action.payload]
         );
         // put data into glibal state
-        friendsAndWannabes = action.payload;
+
+        friendsAndWannabes = [...action.payload];
+        console.log("friendsAndWannabes ❤️", friendsAndWannabes);
     } else if (action.type === "unfriend") {
         console.log("ACTION IN  UNFRIEND🟠", action);
     } else if (action.type === "accept") {
@@ -32,12 +35,12 @@ export function receiveFriendsAndWannabes(action) {
 
 // unfriend() to remove someone from the list of friends and wannabes
 
-// export function unfriend(action) {
-//     return {
-//         type: "unfriend",
-//         payload: { action },
-//     };
-// }
+export function unfriend(action) {
+    return {
+        type: "unfriend",
+        payload: { action },
+    };
+}
 // accept() to accept a friendship request
 
 // export function accept(action) {
