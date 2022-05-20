@@ -151,13 +151,6 @@ module.exports.acceptFriendRequest = (recipient_id, sender_id) => {
     );
 };
 
-// SELECT from friendships JOIN users ... ON ... WHERE ... that gives back all friendships where:
-// the other user is the sender
-// it's not accepted (pending request)
-// it is accepted (friendship)
-// the logged in user is the sender
-// it is accepted (friendship)
-
 module.exports.getFriendships = (sender_id) => {
     return db.query(
         `SELECT users.id, firstname, lastname,  profile_picture_url, accepted
@@ -168,4 +161,36 @@ module.exports.getFriendships = (sender_id) => {
                     OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`,
         [sender_id]
     );
+};
+
+//=============SOCKETS ==========================================
+
+module.exports.getChatMessages = ({ limit }) => {
+    return db
+        .query(
+            `SELECT chat_messages.*, users.firstname, users.lastname,  users.profile_picture_url
+                    FROM chat_messages
+                    JOIN users
+                    ON users.id = chat_messages.sender_id
+                    ODER BY created_at DESC
+                    LIMIT $1
+                    `,
+            [limit]
+        )
+        .then((result) => {
+            result.rows;
+        });
+};
+
+module.exports.createChatMessage = ({ sender_id, text }) => {
+    return db
+        .query(
+            `INSERT INTO chat_messages (sender_id, text) 
+                 VALUES ( $1, $2)
+                 RETURNING *`,
+            [sender_id, text]
+        )
+        .then((result) => {
+            result.rows;
+        });
 };

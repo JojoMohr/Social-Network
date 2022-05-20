@@ -310,9 +310,6 @@ app.post("/set-friendship-status", async (req, res) => {
 });
 
 //== GET /friends-and-wannabes=====================================
-// Using but already present from previous friend button feature
-// POST /friendship/accept
-// POST /friendship/unfriend
 app.get("/friends-and-wannabes", async (req, res) => {
     console.log("GET REQUEST ON /friends-and-wannabes", req.session);
     let userId = req.session.userId;
