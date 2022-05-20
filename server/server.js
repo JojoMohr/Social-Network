@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 const cookieSession = require("cookie-session");
 const { request } = require("express");
 const cookieSessionMiddleware = cookieSession({
-    secret: "...",
+    secret: "whatever",
     maxAge: 1000 * 60 * 60 * 24 * 14,
     sameSite: true,
 });
@@ -41,17 +41,18 @@ io.use((socket, next) =>
 );
 
 io.on("connection", async (socket) => {
-    console.log("Incoming socket connection", socket.id);
+    // console.log("Incoming socket connection", socket.id);
     // you can now access the session via socket as well
-    const { user_id } = socket.request.session;
+    const { userId } = socket.request.session;
+    // console.log("USER ID !!!!!!", userId);
     const recentMessages = await db.getChatMessages();
-    console.log("ALL MESSAGES", recentMessages);
+    // console.log("ALL MESSAGES", recentMessages);
     socket.emit("recentMessages", recentMessages);
 
     socket.on("sendMessage", async (text) => {
-        const sender = await db.getUserById(user_id);
+        const sender = await db.getUserById(userId);
         const message = await db.createChatMessage({
-            sender_id: user_id,
+            sender_id: userId,
             text,
         });
         io.emit("newMessage", {
@@ -123,7 +124,7 @@ app.post(
 app.get("/api/user/:otherUserId", async (req, res) => {
     const otherUserId = req.params.otherUserId;
     const sessionId = req.session.userId;
-    console.log("IDIDID", otherUserId, sessionId);
+    // console.log("IDIDID", otherUserId, sessionId);
 
     try {
         const result = await db.getOtherUser(otherUserId);
@@ -134,10 +135,10 @@ app.get("/api/user/:otherUserId", async (req, res) => {
             res.json({ error: "I DIDNT FIND ANYTING" });
         } else {
             res.json(result || null);
-            console.log("GET RESULTS", result);
+            // console.log("GET RESULTS", result);
         }
     } catch (error) {
-        console.log("ERROR IN CATCH", error.message);
+        // console.log("ERROR IN CATCH", error.message);
     }
 });
 
@@ -151,7 +152,7 @@ app.get("/user/id.json", function (req, res) {
 //================================================================
 
 app.get("/welcome", function (req, res) {
-    console.log("WELCOME PAGE");
+    // console.log("WELCOME PAGE");
 });
 
 //================================================================
@@ -185,7 +186,7 @@ app.post("/register", function (req, res) {
     console.log("POST ON REGISTER 📝");
     let { firstname, lastname, email, password } = req.body;
 
-    console.log(firstname, lastname, email, password);
+    // console.log(firstname, lastname, email, password);
     // call createUser with passed arguments
     db.createUser(req.body)
         .then(({ rows }) => {

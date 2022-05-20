@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import io from "socket.io-client";
 
@@ -28,8 +28,8 @@ export default function Chat() {
     useEffect(() => {
         // listen to the new message event, update the state accordingly
         socket.on("newMessage", (newMessage) => {
-            setMessages(...messages, newMessage);
-            console.log("ALL MESSAGES 📥", messages, newMessage);
+            setMessages([...messages, newMessage]);
+            // console.log("ALL MESSAGES 📥", messages, newMessage);
         });
     }, [messages]);
 
@@ -37,26 +37,35 @@ export default function Chat() {
         event.preventDefault();
         const text = event.target.text.value;
         socket.emit("sendMessage", text);
+        // console.log("🎃🎃🎃🎃", text);
         event.target.text.value = "";
     }
 
     return (
-        <div className="chat-container">
+        <>
             <h1> This is the Groupchat!</h1>
-            {messages &&
-                messages.map((message) => {
-                    return (
-                        <div key={message.id}>
-                            <p>
-                                {message.firstname} says: {message.text}
-                            </p>
-                        </div>
-                    );
-                })}
+
+            <div className="chat-container">
+                {console.log("messages in chat: ", messages)}
+
+                {messages &&
+                    messages.map((message) => {
+                        return (
+                            <div className="single-message" key={message.id}>
+                                <p className="sendername">
+                                    {message.firstname}:
+                                </p>
+                                <p> {message.text}</p>
+                            </div>
+                        );
+                    })}
+            </div>
             <form onSubmit={onSubmit}>
                 <input name="text"></input>
                 <button>Submit</button>
             </form>
-        </div>
+        </>
     );
 }
+
+//iff message.sender_id != userId

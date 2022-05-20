@@ -322,7 +322,6 @@ footer {
     font-weight: bold;
     cursor: pointer;
     border: solid 2px;
-    
 }
 
 .menuButton:hover {
@@ -362,4 +361,34 @@ footer {
 
 .yourfriends {
     border-bottom: 2px solid black;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+
+    height: 60vh;
+    border: solid 1px black;
+    margin: 10px;
+    overflow: scroll;
+}
+
+.single-message {
+    /* border: solid 1px black; */
+    background: rgba(var(--bb2, 239, 239, 239), 1);
+    padding: 10px;
+    margin: 10px;
+    width: 30%;
+
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    border-bottom-left-radius: 22px;
+}
+.single-message p {
+    margin: 3px;
+}
+
+.sendername {
+    font-weight: bold;
 }

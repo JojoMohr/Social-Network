@@ -41,12 +41,13 @@ module.exports.login = ({ email, password }) => {
     });
 };
 
-module.exports.getUserById = (userId) => {
-    return db
-        .query(`SELECT * FROM users WHERE users.id = $1`, [userId])
-        .then((result) => {
-            return result.rows[0];
-        });
+module.exports.getUserById = function (user_id) {
+    const params = [user_id];
+    const query = `
+        SELECT * FROM users 
+        WHERE id = $1
+    `;
+    return db.query(query, params).then((result) => result.rows[0]);
 };
 
 module.exports.getUserByEmail = ({ email }) => {
@@ -198,6 +199,6 @@ module.exports.createChatMessage = ({ sender_id, text }) => {
             [sender_id, text]
         )
         .then((result) => {
-            return result.rows;
+            return result.rows[0];
         });
 };
