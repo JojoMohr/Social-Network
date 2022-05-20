@@ -295,10 +295,16 @@ footer {
 }
 
 .dropdown-menu {
+    background: rgba(var(--d87, 255, 255, 255), 1);
+    box-shadow: 1px 1px 2px 2px #888888;
+    border-radius: 6px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
     position: fixed;
     height: 220px;
     width: 189px;
-    border: solid 2px lightgray;
     background-color: white;
     right: 6px;
     top: 70px;
@@ -316,6 +322,7 @@ footer {
     font-weight: bold;
     cursor: pointer;
     border: solid 2px;
+    
 }
 
 .menuButton:hover {

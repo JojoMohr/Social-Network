@@ -1,3 +1,4 @@
+const { Server } = require("http");
 const express = require("express");
 const app = express();
 const compression = require("compression");
@@ -7,11 +8,13 @@ const db = require("./database/db");
 const uidSafe = require("uid-safe"); // Random string generator
 const multer = require("multer"); // Multer file data middleware
 const { upload } = require("./s3");
+// import { io } from "socket.io-client";
 
 // middleware  makes sure that our server parses incoming json/application requests
 //→ we need this so that we can access values in our req.body easier (check imageboard)
 app.use(compression());
 app.use(express.json());
+const server = Server(app);
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
@@ -26,7 +29,24 @@ app.use(
         sameSite: true,
     })
 );
+//============SOCKETS===========================================
 
+const io = require("socket.io")(server, {
+    allowRequest: (request, callback) =>
+        callback(
+            null,
+            request.headers.referer.startsWith(`http://localhost:3000`)
+        ),
+});
+io.use((socket, next) =>
+    cookieSession(socket.request, socket.request.res, next)
+);
+
+io.on("connection", async (socket) => {
+    console.log("Incoming socket connection", socket.id);
+    // you can now access the session via socket as well
+    const { user_id } = socket.request.session;
+});
 //=================MULTER==================================
 // ======= Specify the storage location  =========//
 
@@ -346,6 +366,6 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening. on PORT 3000 🟢");
 });
