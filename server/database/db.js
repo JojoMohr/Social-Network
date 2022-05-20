@@ -41,6 +41,14 @@ module.exports.login = ({ email, password }) => {
     });
 };
 
+module.exports.getUserById = (userId) => {
+    return db
+        .query(`SELECT * FROM users WHERE users.id = $1`, [userId])
+        .then((result) => {
+            return result.rows[0];
+        });
+};
+
 module.exports.getUserByEmail = ({ email }) => {
     return db
         .query(`SELECT * FROM users WHERE email = $1`, [email])
@@ -165,20 +173,19 @@ module.exports.getFriendships = (sender_id) => {
 
 //=============SOCKETS ==========================================
 
-module.exports.getChatMessages = ({ limit }) => {
+module.exports.getChatMessages = () => {
     return db
         .query(
             `SELECT chat_messages.*, users.firstname, users.lastname,  users.profile_picture_url
                     FROM chat_messages
                     JOIN users
                     ON users.id = chat_messages.sender_id
-                    ODER BY created_at DESC
-                    LIMIT $1
-                    `,
-            [limit]
+                    ORDER BY created_at DESC
+                    `
         )
         .then((result) => {
-            result.rows;
+            console.log("RELUTS AMK ", result.rows);
+            return result.rows;
         });
 };
 
@@ -191,6 +198,6 @@ module.exports.createChatMessage = ({ sender_id, text }) => {
             [sender_id, text]
         )
         .then((result) => {
-            result.rows;
+            return result.rows;
         });
 };

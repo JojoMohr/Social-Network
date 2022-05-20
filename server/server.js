@@ -21,14 +21,12 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 ////////// REQUIERE COOKIE-SESSION ///////////////////////////////////
 const cookieSession = require("cookie-session");
 const { request } = require("express");
-app.use(
-    cookieSession({
-        secret: `noscooters`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-
-        sameSite: true,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: "...",
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+    sameSite: true,
+});
+app.use(cookieSessionMiddleware);
 //============SOCKETS===========================================
 
 const io = require("socket.io")(server, {
@@ -39,14 +37,34 @@ const io = require("socket.io")(server, {
         ),
 });
 io.use((socket, next) =>
-    cookieSession(socket.request, socket.request.res, next)
+    cookieSessionMiddleware(socket.request, socket.request.res, next)
 );
 
 io.on("connection", async (socket) => {
     console.log("Incoming socket connection", socket.id);
     // you can now access the session via socket as well
     const { user_id } = socket.request.session;
+    const recentMessages = await db.getChatMessages();
+    console.log("ALL MESSAGES", recentMessages);
+    socket.emit("recentMessages", recentMessages);
+
+    socket.on("sendMessage", async (text) => {
+        const sender = await db.getUserById(user_id);
+        const message = await db.createChatMessage({
+            sender_id: user_id,
+            text,
+        });
+        io.emit("newMessage", {
+            firstname: sender.firstname,
+            lastname: sender.lastname,
+            profile_picture_url: sender.profile_picture_url,
+            ...message,
+        });
+        // here we store the text
+    });
+    // const newMessage = await db.createChatMessage(text);
 });
+
 //=================MULTER==================================
 // ======= Specify the storage location  =========//
 
