@@ -51,17 +51,24 @@ export default function Chat() {
                 {messages &&
                     messages.map((message) => {
                         return (
-                            <div className="single-message" key={message.id}>
-                                <p className="sendername">
-                                    {message.firstname}:
-                                </p>
-                                <p> {message.text}</p>
-                            </div>
+                            <>
+                                <div className="cirle1"></div>
+
+                                <div
+                                    className="single-message"
+                                    key={message.id}
+                                >
+                                    <p className="sendername">
+                                        {message.firstname}:
+                                    </p>
+                                    <p> {message.text}</p>
+                                </div>
+                            </>
                         );
                     })}
             </div>
-            <form onSubmit={onSubmit}>
-                <input name="text"></input>
+            <form className="chat-input" onSubmit={onSubmit}>
+                <input className="inputChat" name="text"></input>
                 <button>Submit</button>
             </form>
         </>

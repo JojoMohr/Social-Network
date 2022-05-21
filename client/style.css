@@ -210,6 +210,7 @@ footer {
     height: 8rem;
     width: 8rem;
     object-fit: cover;
+    border: none;
 }
 
 .profilePageContent {
@@ -365,21 +366,23 @@ footer {
 
 .chat-container {
     display: flex;
+    position: relative;
     flex-direction: column;
-
+    width: 40%;
     height: 60vh;
     border: solid 1px black;
     margin: 10px;
     overflow: scroll;
+    scroll-behavior: smooth;
+    background-color: #888888;
 }
 
 .single-message {
     /* border: solid 1px black; */
-    background: rgba(var(--bb2, 239, 239, 239), 1);
+    background: rgba(var(--bb2, 239, 239, 239), 0.5);
     padding: 10px;
     margin: 10px;
-    width: 30%;
-
+    width: 50%;
     border-top-left-radius: 22px;
     border-top-right-radius: 22px;
     border-bottom-right-radius: 22px;
@@ -391,4 +394,21 @@ footer {
 
 .sendername {
     font-weight: bold;
+}
+
+.chat-input {
+    caret-color: #0095f6;
+    display: flex;
+}
+
+.chat-input button {
+    width: 90px;
+}
+
+.cirle1 {
+    position: relative;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background-color: #0095f6;
 }
