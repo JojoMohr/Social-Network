@@ -4,6 +4,7 @@ import ProfilePicture from "./profilePicture";
 // import ProfilePictureModal from "./profilePictureModal";
 import Friends from "./friends";
 import Chat from "./chat";
+import PosPostWall from "./postWall";
 
 // this is a functional one!
 export default function Profile({
@@ -40,7 +41,7 @@ export default function Profile({
                 ></BioEditor>
             </main>
             <div className="profilePageContent">
-                <Chat />
+                <PosPostWall />
             </div>
         </div>
     );

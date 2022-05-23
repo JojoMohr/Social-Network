@@ -24,6 +24,7 @@ export default class App extends Component {
             showModal: false,
             showMenu: false,
             bio: "",
+            showChat: false,
         };
         //binding all functions in the component so that they can be accessed with this
         this.onProfileClick = this.onProfileClick.bind(this);
@@ -31,6 +32,7 @@ export default class App extends Component {
         this.onUpload = this.onUpload.bind(this);
         this.onBioUpdate = this.onBioUpdate.bind(this);
         this.onMenuClick = this.onMenuClick.bind(this);
+        this.onChatClick = this.onChatClick.bind(this);
     }
     //fires right after the page is loaded
     componentDidMount() {
@@ -56,6 +58,10 @@ export default class App extends Component {
     onMenuClick() {
         console.log("CLICK ON MENU", this.state.showMenu);
         this.setState({ showMenu: !this.state.showMenu });
+    }
+    onChatClick() {
+        console.log("CLICK ON Chat", this.state.showChat);
+        this.setState({ showChat: !this.state.showChat });
     }
 
     closeModal() {
@@ -101,10 +107,16 @@ export default class App extends Component {
                             <div className="dropdown-menu">
                                 <DropdownMenu
                                     onProfileClick={this.onProfileClick}
+                                    onChatClick={this.onChatClick}
                                 />
                             </div>
                         )}
                     </header>
+                    <div onClick={this.onChatClick} className="chatIcon">
+                        📥
+                    </div>
+                    {this.state.showChat && <Chat />}
+
                     {this.state.showModal && (
                         <ProfilePictureModal
                             closeModal={this.closeModal}
@@ -134,7 +146,7 @@ export default class App extends Component {
                     </Route>
                     <Route path="/friends">
                         <Friends />
-                    </Route>{" "}
+                    </Route>
                     <Route path="/chat">
                         <Chat />
                     </Route>

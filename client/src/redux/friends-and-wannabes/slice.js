@@ -1,19 +1,17 @@
 // Reducer ------------------------------------------
 export function friendsAndWannabesReducer(friendsAndWannabes = [], action) {
     // Your Logic Goes Here
-    console.log("ACTION IN SLICE 🟢 ", action);
     if (action.type == "receiveFriendsAndWannabes") {
-        console.log(
-            "ACTION IN SLICE receiveFriendsAndWannabes 🟠",
-            action.payload,
-            [...friendsAndWannabes, ...action.payload]
-        );
+        // console.log(
+        //     "ACTION IN SLICE receiveFriendsAndWannabes 🟠",
+        //     action.payload,
+        //     [...friendsAndWannabes, ...action.payload]
+        // );
         // put data into glibal state
 
         friendsAndWannabes = [...action.payload];
         console.log("friendsAndWannabes ❤️", friendsAndWannabes);
     } else if (action.type === "unfriend") {
-        console.log("ACTION IN  UNFRIEND🟠", action);
 
         friendsAndWannabes = friendsAndWannabes.filter((friend) => {
             if (friend.id !== action.payload.id) {
@@ -21,7 +19,6 @@ export function friendsAndWannabesReducer(friendsAndWannabes = [], action) {
             }
         });
     } else if (action.type === "accept") {
-        console.log("ACTION IN  ACCEPT 🟠", action);
         friendsAndWannabes = friendsAndWannabes.map((friend) => {
             if (friend.id == action.payload.id) {
                 return {
@@ -42,7 +39,6 @@ export function friendsAndWannabesReducer(friendsAndWannabes = [], action) {
 // receiveFriendsAndWannabees() to populate the state with our initial data
 
 export function receiveFriendsAndWannabes(action) {
-    console.log("ACTION IN SLICE 1 🟠", action);
     return {
         type: "receiveFriendsAndWannabes",
         payload: action,

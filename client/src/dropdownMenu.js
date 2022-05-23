@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./logout";
 import Friends from "./friends";
+import Chat from "./chat";
 // import { Spring } from "react-spring";
-export default function findPeople({ onProfileClick }) {
+export default function findPeople({ onProfileClick, onChatClick }) {
     const [menu, setMenu] = useState();
 
     useEffect(() => {
@@ -14,22 +15,40 @@ export default function findPeople({ onProfileClick }) {
     return (
         <>
             <div>
-                <ul className="dropNav">
-                    <li>
-                        <Link to="/">Profile</Link>
-                    </li>
+                <di className="dropdown-arrow"></di>
+
+                <div className="dropNav">
+                    <div className="menu-auswahl-container">
+                        <p>
+                            <Link to="/">Profile</Link>
+                        </p>
+                    </div>
                     <Link>
-                        <li onClick={onProfileClick}>Change Picture</li>
+                        <div className="menu-auswahl-container">
+                            <p onClick={onProfileClick}>Change Picture</p>
+                        </div>
                     </Link>
-                    <li>
-                        <Link to="/friends">Friends</Link>
-                    </li>
-                    <li>
+                    <div className="menu-auswahl-container">
+                        <p>
+                            <Link to="/friends">Friends</Link>
+                        </p>
+                    </div>
+                    <p>
                         <Link>
-                            <Logout />
+                            <div className="menu-auswahl-container">
+                                <p onClick={onChatClick}>Chat</p>
+                            </div>
                         </Link>
-                    </li>
-                </ul>
+                    </p>
+                    <p>
+                        <hr className="trenner"></hr>
+                        <Link>
+                            <div className="menu-auswahl-container logout">
+                                <Logout />
+                            </div>
+                        </Link>
+                    </p>
+                </div>
             </div>
         </>
     );

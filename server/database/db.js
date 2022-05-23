@@ -182,11 +182,12 @@ module.exports.getChatMessages = () => {
                     JOIN users
                     ON users.id = chat_messages.sender_id
                     ORDER BY created_at DESC
+                    LIMIT 20
                     `
         )
         .then((result) => {
             console.log("RELUTS AMK ", result.rows);
-            return result.rows;
+            return result.rows.reverse();
         });
 };
 

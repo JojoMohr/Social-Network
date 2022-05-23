@@ -85,6 +85,7 @@ export default function Friends() {
                                 <br />
                                 {users.firstname} {users.lastname}
                                 <br />
+                                <hr></hr>
                                 <button
                                     onClick={() => handleAccept(users.id)}
                                     className="accept-button"
@@ -109,6 +110,7 @@ export default function Friends() {
                                 </Link>
                                 <br />
                                 {friend.firstname} {friend.lastname}
+                                <hr></hr>
                                 <button
                                     onClick={() => handleEnd(friend.id)}
                                     className="friend-button"

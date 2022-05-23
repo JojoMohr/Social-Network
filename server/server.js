@@ -47,7 +47,7 @@ io.on("connection", async (socket) => {
     // console.log("USER ID !!!!!!", userId);
     const recentMessages = await db.getChatMessages();
     // console.log("ALL MESSAGES", recentMessages);
-    socket.emit("recentMessages", recentMessages);
+    socket.emit("recentMessages", recentMessages, userId);
 
     socket.on("sendMessage", async (text) => {
         const sender = await db.getUserById(userId);
