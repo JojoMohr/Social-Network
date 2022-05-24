@@ -5,7 +5,7 @@ export default class Register extends Component {
     constructor() {
         super();
         this.state = {};
-
+        this.success = true;
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -40,10 +40,13 @@ export default class Register extends Component {
                 if (result.success == true) {
                     location.reload();
                 } // if all goes to plan, refresh the page
+                if (!result.success) {
+                    this.setState({ error: true });
+                }
             })
-            .catch((err) => {
+            .catch((error) => {
                 // if something goes wrong => render an error
-                console.log("ERROR", err);
+                console.log("ERROR", error);
             });
     }
 

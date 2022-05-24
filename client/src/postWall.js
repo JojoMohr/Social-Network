@@ -7,6 +7,8 @@ export default function PostWall({ userId, profile_picture_url }) {
     const [newPost, setNewPost] = useState([]);
     const { otherUserId } = useParams();
     console.log("PROFILE URL", profile_picture_url);
+
+    //===================================================================
     useEffect(() => {
         console.log("USE EFFECT IN WALL POST");
         fetch(`/getAllPosts/${otherUserId || userId}`)
@@ -17,6 +19,7 @@ export default function PostWall({ userId, profile_picture_url }) {
             });
     }, [newPost, userId, otherUserId]);
     // FETCH FROM  "/getAllPosts/:userId"
+    //===================================================================
 
     function postMessageOnWall(e) {
         e.preventDefault();
@@ -40,12 +43,14 @@ export default function PostWall({ userId, profile_picture_url }) {
             });
         e.target.post.value = "";
     }
+    //===================================================================
 
     function formatDate(timestamp) {
         const date = new Date(timestamp);
         return `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`;
     }
     // console.log("ALL POSTSafdsdfsdfsdfsd", allPosts);
+    //===================================================================
 
     return (
         <>

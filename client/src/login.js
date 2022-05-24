@@ -74,7 +74,8 @@ export default class Login extends Component {
                         name="password"
                         placeholder="Password"
                     />
-                    <button> Login </button>{" "}
+                    <button> Login </button>
+                    {this.state.error && <p>Oops, something went wrong!</p>}
                 </div>
                 <Link to="/"> Click here to Register! </Link>{" "}
             </form>

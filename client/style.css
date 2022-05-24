@@ -192,7 +192,7 @@ footer {
 
 .profileInfo {
     display: flex;
-    height: 70%;
+    max-height: 500px;
     justify-content: flex-start;
     align-items: center;
     /* border: 1px solid; */
@@ -512,7 +512,7 @@ footer {
     display: grid;
     grid-template-rows: 1fr 5fr 1fr;
     background: rgba(var(--d87, 255, 255, 255), 1);
-    box-shadow: 2px 2px 2px 2px #888888;
+    box-shadow: 4px 3px 4px 7px #888888;
     border-radius: 6px;
     /* border: #0095f6 solid 1px; */
     width: 360px;
@@ -590,7 +590,7 @@ footer {
     box-shadow: 2px 2px 2px 2px #888888;
     border-radius: 6px;
     gap: 10px;
-    padding-left: ;
+    padding-left: 10px;
 }
 
 .wallposts-module {
