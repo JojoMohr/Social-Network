@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 export default function FrienshipButton({ otherUserId }) {
     const [buttonText, setButtonText] = useState("");
 
-    console.log("Other user id in button: ", otherUserId);
+    // console.log("Other user id in button: ", otherUserId);
 
     useEffect(() => {
-        console.log("We are on User page :", otherUserId);
+        // console.log("We are on User page :", otherUserId);
 
         fetch(`/get-friendship-status/${otherUserId}`)
             .then((res) => res.json())

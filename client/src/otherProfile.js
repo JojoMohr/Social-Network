@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import ProfilePicture from "./profilePicture";
 import FrienshipButton from "./friendshipButton";
+import PostWall from "./postWall";
 
-export default function OtherProfile() {
+export default function OtherProfile({ profile_picture_url }) {
     const { otherUserId } = useParams();
     const [err, setErr] = useState(false);
     const [user, setUser] = useState({});
     const history = useHistory();
     console.log("history:", history);
+
     useEffect(() => {
         let abort = false;
 
@@ -24,11 +26,6 @@ export default function OtherProfile() {
             .then((user) => {
                 console.log("USER!!!!", user);
 
-                // THIS LOG IS NOT SHIWING ❌
-                // if (user.error == "I DIDNT FIND ANYTING") {
-                //     console.log("I DIDNT FIND ANYTING", user.error);
-                //     return history.push("/findpeople");
-                // }
                 if (
                     user.error == "THIS IS YOU" ||
                     user.error == "I DIDNT FIND ANYTING"
@@ -38,18 +35,10 @@ export default function OtherProfile() {
                 }
 
                 if (!abort) {
-                    // so that in our return we can render this information
-                    // #3.b the server tells us this user doesn't exist
-                    //our way of handling this could be that we set an error state
-
-                    // #3.c the server tells us this is our own profile
-
                     if (!user) {
-                        // setErr(true);
                         console.log("IAM HERE");
                         history.push("/findpeople");
                     } else {
-                        // #3.a upon response we will want to add our user data into state,
                         setUser(user);
                     }
                 }
@@ -69,13 +58,13 @@ export default function OtherProfile() {
                     profile_picture_url={user.profile_picture_url}
                 />
 
-                <div className="textarea">
+                <div className="textarea bio">
                     <p> {user.bio}</p>
                 </div>
                 <FrienshipButton otherUserId={otherUserId} />
             </main>
             <div className="profilePageContent">
-                <p>THIS IS WHERE THE INFO GOES!</p>
+                <PostWall profile_picture_url={profile_picture_url} />
             </div>
             {err && <h2>ERORROROR</h2>}
             {/* {err ? "HELLO" : "NO HELLO"} */}

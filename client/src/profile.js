@@ -15,6 +15,7 @@ export default function Profile({
     bio,
     onBioUpdate,
     onProfileClick,
+    userId,
     // showModal = false,
     // closeModal,
     // onUpload,
@@ -41,7 +42,10 @@ export default function Profile({
                 ></BioEditor>
             </main>
             <div className="profilePageContent">
-                <PosPostWall />
+                <PosPostWall
+                    userId={userId}
+                    profile_picture_url={profile_picture_url}
+                />
             </div>
         </div>
     );

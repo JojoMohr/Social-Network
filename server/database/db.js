@@ -105,7 +105,6 @@ module.exports.getMatchingUsers = async function (val) {
 };
 
 module.exports.friendRequestStatus = (recipient_id, sender_id) => {
-    console.log("WE are in friendRequestStatus function on DB");
     return db
         .query(
             `SELECT * FROM friendships
@@ -201,5 +200,37 @@ module.exports.createChatMessage = ({ sender_id, text }) => {
         )
         .then((result) => {
             return result.rows[0];
+        });
+}; //================================================
+module.exports.getAllPosts = (userId) => {
+    console.log("USER ID _>_>_", userId);
+    return db
+        .query(
+            `SELECT posts.*, users.firstname, users.lastname, users.profile_picture_url
+                    FROM posts
+                    JOIN users
+                    ON users.id = posts.sender_id
+                    WHERE (posts.recipient_id = $1)
+                    ORDER BY created_at DESC
+                    LIMIT 20
+                    `,
+            [userId]
+        )
+        .then((result) => {
+            console.log("RELUTS OF ALL THE POSTS FROM DB ", result.rows);
+            return result.rows;
+        });
+};
+
+module.exports.creatPost = (sender_id, recipient_id, text) => {
+    return db
+        .query(
+            `INSERT INTO posts (sender_id,recipient_id, text) 
+                 VALUES ( $1, $2, $3)
+                 RETURNING *`,
+            [sender_id, recipient_id, text]
+        )
+        .then((result) => {
+            return result.rows;
         });
 };

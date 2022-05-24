@@ -91,7 +91,7 @@ export default function Chat() {
     return (
         <>
             <div className="chat">
-                {/* <h3> This is the Groupchat!</h3> */}
+                <h3 className="groupchat-heading">Groupchat!</h3>
 
                 <div className="chat-container">
                     {messages &&

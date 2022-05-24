@@ -9,6 +9,7 @@ import OtherProfile from "./otherProfile";
 import DropdownMenu from "./dropdownMenu";
 import Friends from "./friends";
 import Chat from "./chat";
+import PostWall from "./postWall";
 
 // import { Spring } from "react-spring";
 //===========FUNCTION COMPONENT============================================
@@ -25,6 +26,7 @@ export default class App extends Component {
             showMenu: false,
             bio: "",
             showChat: false,
+            userId: "",
         };
         //binding all functions in the component so that they can be accessed with this
         this.onProfileClick = this.onProfileClick.bind(this);
@@ -39,12 +41,14 @@ export default class App extends Component {
         fetch("/api/users/me")
             .then((response) => response.json())
             .then((data) => {
+                console.log("DATA", data.id);
                 // Sets all props accordingly
                 this.setState({
                     firstname: data.firstname,
                     lastname: data.lastname,
                     profile_picture_url: data.profile_picture_url,
                     bio: data.bio,
+                    userId: data.id,
                 });
             })
             .catch((error) => console.log(error));
@@ -139,10 +143,13 @@ export default class App extends Component {
                             onProfileClick={this.onProfileClick}
                             showModal={this.showModal}
                             onBioUpdate={this.onBioUpdate}
+                            userId={this.state.userId}
                         />
                     </Route>
                     <Route path="/user/:otherUserId">
-                        <OtherProfile />
+                        <OtherProfile
+                            profile_picture_url={this.state.profile_picture_url}
+                        />
                     </Route>
                     <Route path="/friends">
                         <Friends />

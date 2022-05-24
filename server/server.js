@@ -40,32 +40,6 @@ io.use((socket, next) =>
     cookieSessionMiddleware(socket.request, socket.request.res, next)
 );
 
-io.on("connection", async (socket) => {
-    // console.log("Incoming socket connection", socket.id);
-    // you can now access the session via socket as well
-    const { userId } = socket.request.session;
-    // console.log("USER ID !!!!!!", userId);
-    const recentMessages = await db.getChatMessages();
-    // console.log("ALL MESSAGES", recentMessages);
-    socket.emit("recentMessages", recentMessages, userId);
-
-    socket.on("sendMessage", async (text) => {
-        const sender = await db.getUserById(userId);
-        const message = await db.createChatMessage({
-            sender_id: userId,
-            text,
-        });
-        io.emit("newMessage", {
-            firstname: sender.firstname,
-            lastname: sender.lastname,
-            profile_picture_url: sender.profile_picture_url,
-            ...message,
-        });
-        // here we store the text
-    });
-    // const newMessage = await db.createChatMessage(text);
-});
-
 //=================MULTER==================================
 // ======= Specify the storage location  =========//
 
@@ -241,19 +215,54 @@ app.post("/api/users/bio", async (req, res) => {
     }
 });
 
+//================================================================
+app.get("/getAllPosts/:userId", async (req, res) => {
+    const userId = req.params.userId;
+
+    console.log("🟠in GET ALL POST", userId);
+    try {
+        const allPosts = await db.getAllPosts(userId);
+        res.json(allPosts);
+    } catch (error) {
+        console.log("ERROR IN GET", error.message);
+    }
+});
+
+//================================================================
+app.post("/createWallPosts/:userId", async (req, res) => {
+    console.log("GET ON ALL WALL POST");
+    try {
+        const otherUserId = req.params.userId;
+        const userId = req.session.userId;
+        console.log("otherUserId", +otherUserId);
+        console.log("userId", userId);
+
+        const { newPost } = req.body;
+        console.log("POST", req.body);
+
+        const result = await db.creatPost(userId, +otherUserId, newPost);
+        res.json(result);
+        // get the new user Bio
+        console.log("RESULT", result);
+    } catch (error) {
+        console.log(
+            "ERROR IN CATCH  POST /createWallPosts/:userId",
+            error.message
+        );
+    }
+});
+
 //==  GET /friendship-status/:id
 app.get("/get-friendship-status/:id", async (req, res) => {
     try {
         const recipient_id = req.params.id;
         const sender_id = req.session.userId;
-        console.log("LOGLOGLOGL", recipient_id, sender_id);
 
         const friendRequestStatus = await db.friendRequestStatus(
             recipient_id,
             sender_id
         );
 
-        console.log("friendshipStatus", friendRequestStatus);
         // NO FRIENDSHIP AND NO REQUEST
         if (friendRequestStatus.length < 1) {
             return res.json({ error: null, status: "ADD FRIEND" });
@@ -376,6 +385,33 @@ app.get("/logout", (req, res) => {
     req.session = null;
     res.json({ success: true });
 });
+//================================================================
+
+//================================================================
+
+io.on("connection", async (socket) => {
+    const { userId } = socket.request.session;
+    const recentMessages = await db.getChatMessages();
+    socket.emit("recentMessages", recentMessages, userId);
+    socket.on("sendMessage", async (text) => {
+        const sender = await db.getUserById(userId);
+        const message = await db.createChatMessage({
+            sender_id: userId,
+            text,
+        });
+        io.emit("newMessage", {
+            firstname: sender.firstname,
+            lastname: sender.lastname,
+            profile_picture_url: sender.profile_picture_url,
+            ...message,
+        });
+        // here we store the text
+    });
+    // const newMessage = await db.createChatMessage(text);
+});
+
+//================================================================
+
 //================================================================
 
 app.get("*", function (req, res) {

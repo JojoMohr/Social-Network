@@ -26,9 +26,7 @@ export default class BioEditor extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        // extract the bio
         const newBio = e.target.bio.value;
-        // make the right HTTP call
         fetch("/api/users/bio", {
             method: "POST",
             body: JSON.stringify({ bio: newBio }),

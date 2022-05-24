@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS posts;
+
 
 CREATE TABLE users (
     id             SERIAL PRIMARY KEY,
@@ -21,9 +23,12 @@ CREATE TABLE friendships(
 );
 
 
-CREATE TABLE chat_messages (
+
+
+CREATE TABLE posts (
     id              SERIAL PRIMARY KEY,
     sender_id       INT REFERENCES users(id) NOT NULL,
+    recipient_id    INT REFERENCES users(id) NOT NULL,
     text            TEXT,
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

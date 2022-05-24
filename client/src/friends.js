@@ -12,12 +12,12 @@ export default function Friends() {
         return state.friendsAndWannabes.filter(({ accepted }) => accepted);
     });
 
-    console.log("friends", friends);
+    // console.log("friends", friends);
     const wannabes = useSelector((state) => {
         return state.friendsAndWannabes.filter(({ accepted }) => !accepted);
     });
 
-    console.log("wannabes", wannabes);
+    // console.log("wannabes", wannabes);
 
     useEffect(() => {
         console.log("FETCHING DATA FROM /friends-and-wannabes");
