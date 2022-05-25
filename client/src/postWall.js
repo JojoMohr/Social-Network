@@ -54,7 +54,7 @@ export default function PostWall({ userId, profile_picture_url }) {
 
     return (
         <>
-            <h3>This is the Posting Wall</h3>
+            <h3 className="postwalltitel">Post Wall</h3>
 
             <div className="wall-container">
                 <div className="posting-module">

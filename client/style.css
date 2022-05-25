@@ -435,6 +435,8 @@ footer {
 .message {
     display: flex;
     flex-wrap: wrap;
+    z-index: -1;
+    position: relative;
     /* border: solid 1px black; */
     background: rgba(var(--bb2, 239, 239, 239), 0.5);
     margin: 5px;
@@ -616,4 +618,8 @@ footer {
 
 .yourfriends {
     padding-left: 10px;
+}
+
+.postwalltitel {
+    border-bottom: #888888 1px solid;
 }
