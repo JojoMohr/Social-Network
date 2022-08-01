@@ -10,5 +10,5 @@ Fully functioning Social-Network developed with:
 =>socket.io 
 
 
+![68FFA3DF-9378-46A3-A602-1B476E0DB59E_1_206_a](https://user-images.githubusercontent.com/99038739/182256979-fb868282-1177-4872-9f0c-a83dab03705c.gif)
 
-![Bildschirmaufnahme 2022-08-01 um 16 27 41](https://user-images.githubusercontent.com/99038739/182256002-ee44bb8b-abfb-4491-ad0e-851797085325.gif)
