@@ -9,5 +9,4 @@ Fully functioning Social-Network developed with:
 =>AWS 
 =>socket.io 
 
-
-![68FFA3DF-9378-46A3-A602-1B476E0DB59E_1_206_a](https://user-images.githubusercontent.com/99038739/182257057-b03bebe7-bdc8-42bd-b4d5-4c92528fa21d.gif)
+![Bildschirmaufnahme-2022-08-01-um-16 27 41-_1_](https://user-images.githubusercontent.com/99038739/182624095-df18fe40-0e3c-4d27-a3b7-32e927c5c940.gif)
